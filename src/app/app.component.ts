@@ -1,3 +1,4 @@
+import { MenuItem } from 'primeng/api';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,4 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'e-learning';
+
+  items: MenuItem[] = [
+]
 }

@@ -1,0 +1,32 @@
+<div class="m-3">
+<h1>E-Learning y Formación</h1>
+<h3>Hola <span>USUARIO</span>, este es el progreso de tu formación.</h3>
+<div class="container text-center mt-4">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+            <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
+        </div>
+        
+      </div>
+      <div class="col">
+        <p-chart type="line" [data]="data" [options]="options"></p-chart>
+      </div>
+      <div class="col">
+        <div class="card flex justify-content-center">
+          <p-chart type="radar" [data]="data2" [options]="options2"></p-chart>
+      </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+
+      </div>
+      <div class="col">
+        <a target="_blank" href="http://3.90.85.98/moodle/" class="btn btn-success">Ir a Moodle</a>
+      </div>
+      <div class="col">
+      </div>
+    </div>
+  </div>
+</div>
