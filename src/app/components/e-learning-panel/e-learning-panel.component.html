@@ -1,31 +1,135 @@
 <div class="m-3">
-<h1>E-Learning y Formación</h1>
-<h3>Hola <span>USUARIO</span>, este es el progreso de tu formación.</h3>
-<div class="container text-center mt-4">
-    <div class="row">
-      <div class="col">
-        <div class="card">
-            <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
+  <h1>E-Learning y Formación</h1>
+  <h3>
+    Hola <strong>USUARIO PST</strong>, este es el progreso de tu formación.
+  </h3>
+  <div class="container text-center mt-4">
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button
+            class="accordion-button"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseOne"
+            aria-expanded="true"
+            aria-controls="collapseOne"
+          >
+            Analítica de Datos
+          </button>
+        </h2>
+        <div
+          id="collapseOne"
+          class="accordion-collapse collapse show"
+          aria-labelledby="headingOne"
+          data-bs-parent="#accordionExample"
+        >
+          <div class="accordion-body">
+            <div class="row">
+              <div class="col">
+                <div class="card p-2">
+                  <p-chart
+                    type="doughnut"
+                    [data]="basicData"
+                    [options]="basicOptions"
+                  ></p-chart>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card p-2">
+                  <p-chart
+                    type="doughnut"
+                    [data]="basicData2"
+                    [options]="basicOptions2"
+                  ></p-chart>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card p-2 flex justify-content-center">
+                  <p-chart
+                    type="doughnut"
+                    [data]="basicData3"
+                    [options]="basicOptions3"
+                  ></p-chart>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        
       </div>
-      <div class="col">
-        <p-chart type="line" [data]="data" [options]="options"></p-chart>
-      </div>
-      <div class="col">
-        <div class="card flex justify-content-center">
-          <p-chart type="radar" [data]="data2" [options]="options2"></p-chart>
-      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseTwo"
+            aria-expanded="false"
+            aria-controls="collapseTwo"
+          >
+            Notas Individuales
+          </button>
+        </h2>
+        <div
+          id="collapseTwo"
+          class="accordion-collapse collapse"
+          aria-labelledby="headingTwo"
+          data-bs-parent="#accordionExample"
+        >
+          <div class="accordion-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">MoodleID</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Nota Módulo 1</th>
+                  <th scope="col">Nota Módulo 2</th>
+                  <th scope="col">Nota Módulo 3</th>
+                  <th scope="col">Nota Final</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Juan Díaz</td>
+                  <td>5</td>
+                  <td>4</td>
+                  <td>1</td>
+                  <td>3.33</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Pedro Jiménez</td>
+                  <td>5</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <td>3.66</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>Carlos Martínez</td>
+                  <td>5</td>
+                  <td>5</td>
+                  <td>5</td>
+                  <td>5</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row mt-5">
+      <div class="col"></div>
       <div class="col">
+        <a
+          target="_blank"
+          href="http://54.225.85.252/moodle/"
+          class="btn btn-success"
+          >Ir a Moodle</a
+        >
       </div>
-      <div class="col">
-        <a target="_blank" href="http://3.90.85.98/moodle/" class="btn btn-success">Ir a Moodle</a>
-      </div>
-      <div class="col">
-      </div>
+      <div class="col"></div>
     </div>
   </div>
 </div>

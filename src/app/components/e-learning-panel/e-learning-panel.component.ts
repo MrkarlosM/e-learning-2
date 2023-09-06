@@ -8,6 +8,10 @@ import { Component, OnInit } from '@angular/core';
 export class ELearningPanelComponent implements OnInit {
   basicData: any;
   basicOptions: any;
+  basicData2: any;
+  basicOptions2: any;
+  basicData3: any;
+  basicOptions3: any;
   data: any;
   options: any;
   data2: any;
@@ -20,11 +24,11 @@ export class ELearningPanelComponent implements OnInit {
       const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
       this.basicData = {
-          labels: ['Módulo 1', 'Módulo 2', 'Módulo 3', 'Módulo 4'],
+          labels: ['Colaboradores que han Finalizado Cursos', 'Total Colaboradores Matriculados'],
           datasets: [
               {
-                  label: 'Porcentaje Módulos completados',
-                  data: [100, 25, 70, 62],
+                  label: 'Cobertura asistencia PST',
+                  data: [7, 10],
                   backgroundColor: ['rgba(255, 159, 64, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)'],
                   borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
                   borderWidth: 1
@@ -33,35 +37,89 @@ export class ELearningPanelComponent implements OnInit {
       };
 
       this.basicOptions = {
-          plugins: {
-              legend: {
-                  labels: {
-                      color: textColor
-                  }
-              }
-          },
-          scales: {
-              y: {
-                  beginAtZero: true,
-                  ticks: {
-                      color: textColorSecondary
-                  },
-                  grid: {
-                      color: surfaceBorder,
-                      drawBorder: false
-                  }
-              },
-              x: {
-                  ticks: {
-                      color: textColorSecondary
-                  },
-                  grid: {
-                      color: surfaceBorder,
-                      drawBorder: false
-                  }
+        cutout: '60%',
+        plugins: {
+            title: {
+                display: true,
+                text: 'Cobertura Asistencia',
+                font: {
+                    size: 20
+                },
+            },
+            legend: {
+                labels: {
+                    color: textColor
+                }
+            }
+        }
+    };
+
+    this.basicData2 = {
+        labels: ['Colaboradores que Iniciaron y No han Finalizado Cursos', 'Total Colaboradores Matriculados'],
+        datasets: [
+            {
+                label: 'Cobertura asistencia PST',
+                data: [3, 10],
+                backgroundColor: [documentStyle.getPropertyValue('--red-500'), documentStyle.getPropertyValue('--green-500'), documentStyle.getPropertyValue('--green-500')],
+                hoverBackgroundColor: [documentStyle.getPropertyValue('--red-400'), documentStyle.getPropertyValue('--green-400'), documentStyle.getPropertyValue('--green-400')],
+                borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
+                borderWidth: 1
+            }
+        ]
+    };
+
+    this.basicOptions2 = {
+      cutout: '60%',
+      plugins: {    
+        title: {
+            display: true,
+            text: 'Deserción',
+            font: {
+                size: 20
+        }},
+          legend: {
+              labels: {
+                  color: textColor
               }
           }
-      };
+      }
+  };
+
+  this.basicData3 = {
+    labels: ['Colaboradores que finalizaron OVA', 'Total Colaboradores Matriculados'],
+    datasets: [
+        {
+            label: 'Cobertura asistencia PST',
+            data: [4, 10],
+            backgroundColor: [documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--green-500')],
+            hoverBackgroundColor: [documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--green-400')],
+            borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
+            borderWidth: 1
+        }
+    ]
+};
+
+this.basicOptions3 = {
+  cutout: '60%',
+  plugins: {
+    title: {
+        display: true,
+        text: 'Cumplimiento OVA',
+        font: {
+            size: 20
+        },
+        padding: {
+            top: 10,
+            bottom: 10
+        }
+    },
+      legend: {
+          labels: {
+              color: textColor
+          }
+      }
+  }
+};
 
       this.data = {
         labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],

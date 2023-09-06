@@ -1,0 +1,95 @@
+<div class="m-3">
+    <h1>E-Learning y Formación</h1>
+    <h3>
+      Hola <strong>USUARIO PST</strong>, este es el progreso de tu formación.
+    </h3>
+    <div class="container text-center mt-4">
+      <div class="accordion" id="accordionExample">
+      <div class="row">
+        <div class="col">
+          <div class="card p-2">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Departamentos</option>
+                <option value="1">Dep 1</option>
+                <option value="2">Dep 2</option>
+              </select>
+              <select class="form-select" aria-label="Default select example2">
+                <option selected>Municipios</option>
+                <option value="1">Mun 1</option>
+                <option value="2">Mun 2</option>
+              </select>
+              <select class="form-select" aria-label="Default select example3">
+                <option selected>Ubicación</option>
+                <option value="1">Rural</option>
+                <option value="2">Urbana</option>
+              </select>
+            <p-chart
+              type="doughnut"
+              [data]="basicData"
+              [options]="basicOptions"
+            ></p-chart>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card p-2">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Departamentos</option>
+                <option value="1">Dep 1</option>
+                <option value="2">Dep 2</option>
+              </select>
+              <select class="form-select" aria-label="Default select example2">
+                <option selected>Municipios</option>
+                <option value="1">Mun 1</option>
+                <option value="2">Mun 2</option>
+              </select>
+              <select class="form-select" aria-label="Default select example3">
+                <option selected>Ubicación</option>
+                <option value="1">Rural</option>
+                <option value="2">Urbana</option>
+              </select>
+            <p-chart
+              type="doughnut"
+              [data]="basicData2"
+              [options]="basicOptions2"
+            ></p-chart>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card p-2 flex justify-content-center">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Departamentos</option>
+                <option *ngFor="let depto of deptos" value="{{depto.cod_depto}}">{{depto.dpto}}</option>
+              </select>
+              <select class="form-select" aria-label="Default select example2">
+                <option selected>Municipios</option>
+                <option value="1">Mun 1</option>
+                <option value="2">Mun 2</option>
+              </select>
+              <select class="form-select" aria-label="Default select example3">
+                <option selected>Ubicación</option>
+                <option value="1">Rural</option>
+                <option value="2">Urbana</option>
+              </select>
+            <p-chart
+              type="doughnut"
+              [data]="basicData3"
+              [options]="basicOptions3"
+            ></p-chart>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col"></div>
+        <div class="col">
+          <a
+            target="_blank"
+            href="http://54.225.85.252/moodle/"
+            class="btn btn-success"
+            >Ir a Moodle</a
+          >
+        </div>
+        <div class="col"></div>
+      </div>
+    </div>
+  </div>
+  

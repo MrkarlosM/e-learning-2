@@ -19,14 +19,14 @@
     "@angular/platform-browser-dynamic": "^16.0.3",
     "@angular/router": "^16.0.3",
     "chart.js": "^4.3.0",
-    "primeng": "^16.0.0-rc.2",
+    "primeng": "^15.4.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.0.2",
-    "@angular/cli": "~16.0.2",
+    "@angular/cli": "^16.2.0",
     "@angular/compiler-cli": "^16.0.3",
     "@types/jasmine": "~4.3.0",
     "jasmine-core": "~4.5.0",
