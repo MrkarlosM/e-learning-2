@@ -1,7 +1,8 @@
 <div class="m-3">
   <h1>E-Learning y Formación</h1>
   <h3>
-    Hola <strong>USUARIO PST</strong>, este es el progreso de tu formación.
+    Hola <strong>USUARIO PST{{ inputFromMinCIT }}</strong
+    >, este es el progreso de tu formación.
   </h3>
   <div class="container text-center mt-4">
     <div class="accordion" id="accordionExample">
@@ -89,29 +90,13 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Juan Díaz</td>
-                  <td>5</td>
-                  <td>4</td>
-                  <td>1</td>
-                  <td>3.33</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Pedro Jiménez</td>
-                  <td>5</td>
-                  <td>3</td>
-                  <td>3</td>
-                  <td>3.66</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Carlos Martínez</td>
-                  <td>5</td>
-                  <td>5</td>
-                  <td>5</td>
-                  <td>5</td>
+                <tr *ngFor="let user of tableArray">
+                  <th scope="row">{{ user.MoodleID }}</th>
+                  <td>{{ user.nombre }}</td>
+                  <td>{{ user.nota1 }}</td>
+                  <td>{{ user.nota2 }}</td>
+                  <td>{{ user.nota3 }}</td>
+                  <td>{{ user.notaf }}</td>
                 </tr>
               </tbody>
             </table>

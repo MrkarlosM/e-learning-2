@@ -2,147 +2,150 @@ import { DivipolaServiceService } from './../../services/divipola-service.servic
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-e-learning-panel-mincit',
-  templateUrl: './e-learning-panel-mincit.component.html',
-  styleUrls: ['./e-learning-panel-mincit.component.css']
+    selector: 'app-e-learning-panel-mincit',
+    templateUrl: './e-learning-panel-mincit.component.html',
+    styleUrls: ['./e-learning-panel-mincit.component.css']
 })
 export class ELearningPanelMincitComponent implements OnInit {
-  basicData: any;
-  basicOptions: any;
-  basicData2: any;
-  basicOptions2: any;
-  basicData3: any;
-  basicOptions3: any;
+    basicData: any;
+    basicOptions: any;
+    basicData2: any;
+    basicOptions2: any;
+    basicData3: any;
+    basicOptions3: any;
+    selectedValue: any;
+    variable: any;
+    deptos: any;
 
-  variable: any;
+    constructor(private _divipola: DivipolaServiceService) {
 
-  deptos:any;
-
-  constructor(private _divipola: DivipolaServiceService){
-
-  }
-  ngOnInit() {
-    const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
-    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-
-    this.basicData = {
-        labels: ['No. PST Realizando Cursos', 'Total PST Inscritos'],
-        datasets: [
-            {
-                label: 'Cobertura asistencia PST',
-                data: [400, 600],
-                backgroundColor: ['rgba(255, 159, 64, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)'],
-                borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
-                borderWidth: 1
-            }
-        ]
-    };
-
-    this.basicOptions = {
-      cutout: '60%',
-      plugins: {
-          title: {
-              display: true,
-              text: 'Cobertura Asistencia',
-              font: {
-                  size: 20
-              },
-          },
-          legend: {
-              labels: {
-                  color: textColor
-              }
-          }
-      }
-  };
-
-  this.basicData2 = {
-      labels: ['Total Cursos Terminados por PST', 'Total Matriculados'],
-      datasets: [
-          {
-              label: 'Cobertura asistencia PST',
-              data: [300, 600],
-              backgroundColor: [documentStyle.getPropertyValue('--red-500'), documentStyle.getPropertyValue('--green-500'), documentStyle.getPropertyValue('--green-500')],
-              hoverBackgroundColor: [documentStyle.getPropertyValue('--red-400'), documentStyle.getPropertyValue('--green-400'), documentStyle.getPropertyValue('--green-400')],
-              borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
-              borderWidth: 1
-          }
-      ]
-  };
-
-  this.basicOptions2 = {
-    cutout: '60%',
-    plugins: {    
-      title: {
-          display: true,
-          text: 'Deserción',
-          font: {
-              size: 20
-      }},
-        legend: {
-            labels: {
-                color: textColor
-            }
-        }
     }
-};
+    ngOnInit() {
+        const documentStyle = getComputedStyle(document.documentElement);
+        const textColor = documentStyle.getPropertyValue('--text-color');
+        const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+        const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
-this.basicData3 = {
-  labels: ['Colaboradores que finalizaron OVA por PST', 'Total Matriculados'],
-  datasets: [
-      {
-          label: 'Cobertura asistencia PST',
-          data: [200, 600],
-          backgroundColor: [documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--green-500')],
-          hoverBackgroundColor: [documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--green-400')],
-          borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
-          borderWidth: 1
-      }
-  ]
-};
+        this.basicData = {
+            labels: ['No. PST Realizando Cursos', 'Total PST Inscritos'],
+            datasets: [
+                {
+                    label: 'Cobertura asistencia PST',
+                    data: [400, 600],
+                    backgroundColor: ['rgba(255, 159, 64, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)'],
+                    borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
+                    borderWidth: 1
+                }
+            ]
+        };
 
-this.basicOptions3 = {
-cutout: '60%',
-plugins: {
-  title: {
-      display: true,
-      text: 'Cumplimiento OVA',
-      font: {
-          size: 20
-      },
-      padding: {
-          top: 10,
-          bottom: 10
-      }
-  },
-    legend: {
-        labels: {
-            color: textColor
-        }
+        this.basicOptions = {
+            cutout: '60%',
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Cobertura Asistencia',
+                    font: {
+                        size: 20
+                    },
+                },
+                legend: {
+                    labels: {
+                        color: textColor
+                    }
+                }
+            }
+        };
+
+        this.basicData2 = {
+            labels: ['Total Cursos Terminados por PST', 'Total Matriculados'],
+            datasets: [
+                {
+                    label: 'Cobertura asistencia PST',
+                    data: [300, 600],
+                    backgroundColor: [documentStyle.getPropertyValue('--red-500'), documentStyle.getPropertyValue('--green-500'), documentStyle.getPropertyValue('--green-500')],
+                    hoverBackgroundColor: [documentStyle.getPropertyValue('--red-400'), documentStyle.getPropertyValue('--green-400'), documentStyle.getPropertyValue('--green-400')],
+                    borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        this.basicOptions2 = {
+            cutout: '60%',
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Deserción',
+                    font: {
+                        size: 20
+                    }
+                },
+                legend: {
+                    labels: {
+                        color: textColor
+                    }
+                }
+            }
+        };
+
+        this.basicData3 = {
+            labels: ['Colaboradores que finalizaron OVA por PST', 'Total Matriculados'],
+            datasets: [
+                {
+                    label: 'Cobertura asistencia PST',
+                    data: [200, 600],
+                    backgroundColor: [documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--green-500')],
+                    hoverBackgroundColor: [documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--green-400')],
+                    borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        this.basicOptions3 = {
+            cutout: '60%',
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Cumplimiento OVA',
+                    font: {
+                        size: 20
+                    },
+                    padding: {
+                        top: 10,
+                        bottom: 10
+                    }
+                },
+                legend: {
+                    labels: {
+                        color: textColor
+                    }
+                }
+            }
+        };
+
+        this._divipola.getAllMunicipios().subscribe(data => {
+            console.log(data);
+
+            const divipolaUnica: any[] = [];
+            const divipolaSet: Set<string> = new Set();
+
+            data.forEach((item: any) => {
+                const itemStr = `${item.cod_depto}-${item.dpto}`;
+                if (!divipolaSet.has(itemStr)) {
+                    divipolaSet.add(itemStr);
+                    divipolaUnica.push(item);
+                }
+            });
+            this.deptos = divipolaUnica.slice(0, 33);
+            console.log(this.deptos);
+
+        })
+    }
+
+    onSelectChange(event: any): void {
+        this.selectedValue = event.target.value;
+        console.log('Valor seleccionado:', this.selectedValue);
     }
 }
-};
-
-this._divipola.getAllMunicipios().subscribe(data=>{
-console.log(data);
-
-const divipolaUnica: any[] = [];
-const divipolaSet: Set<string> = new Set();
-
-data.forEach((item: any) => {
-  const itemStr = `${item.cod_depto}-${item.dpto}`;
-  if (!divipolaSet.has(itemStr)) {
-    divipolaSet.add(itemStr);
-    divipolaUnica.push(item);
-  }
-});
-this.deptos = divipolaUnica.slice(0,33);
-console.log(this.deptos);
-
-})
-
-
-
-}}
