@@ -5,6 +5,21 @@
     la formación.
   </h3>
   <div class="container text-center mt-4">
+    <form [formGroup]="courseForms">
+      <p-multiSelect
+        (onChange)="muestraPST()"
+        [style]="selectStyles"
+        [options]="cursos"
+        formControlName="selectedCursos"
+        optionLabel="fullname"
+      ></p-multiSelect>
+      <p-multiSelect
+        [style]="selectStyles"
+        [options]="psts"
+        formControlName="selectedPSTs"
+        optionLabel="name"
+      ></p-multiSelect>
+    </form>
     <div class="accordion" id="accordionMincit">
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingOneMincit">
@@ -88,6 +103,11 @@
             </div>
             <div class="col">
               <div class="card p-2 flex justify-content-center">
+                <p-multiSelect
+                  [options]="deptos"
+                  formControlName="selectedPSTs"
+                  optionLabel="name"
+                ></p-multiSelect>
                 <select class="form-select" aria-label="Default select example">
                   <option selected>Departamentos</option>
                   <option

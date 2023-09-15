@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ELearningPanelComponent } from './components/e-learning-panel/e-learning-panel.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 //PrimeNG
 import { MenubarModule } from 'primeng/menubar';
 import { ChartModule } from 'primeng/chart';
 import { ELearningPanelMincitComponent } from './components/e-learning-panel-mincit/e-learning-panel-mincit.component';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,7 @@ import { ELearningPanelMincitComponent } from './components/e-learning-panel-min
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule, MenubarModule, ChartModule, HttpClientModule, FormsModule
+    AppRoutingModule, MenubarModule, ChartModule, HttpClientModule, FormsModule, ReactiveFormsModule, MultiSelectModule, BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

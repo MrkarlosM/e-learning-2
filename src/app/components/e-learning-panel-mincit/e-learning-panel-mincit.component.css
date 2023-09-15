@@ -1,3 +1,7 @@
 #PSTSelect {
     max-width: 800px;
 }
+
+.p-multilineselect {
+    width: 80%;
+}

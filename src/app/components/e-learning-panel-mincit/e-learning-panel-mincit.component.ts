@@ -1,5 +1,7 @@
+import { MoodleServiceService } from 'src/app/services/moodle-service.service';
 import { DivipolaServiceService } from './../../services/divipola-service.service';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'app-e-learning-panel-mincit',
@@ -16,15 +18,35 @@ export class ELearningPanelMincitComponent implements OnInit {
     selectedValue: any;
     variable: any;
     deptos: any;
+    cursos: any;
+    selectedCursos: any;
+    courseForms: FormGroup;
+    psts: any[] = [];
+    selectedPSTs: any;
 
-    constructor(private _divipola: DivipolaServiceService) {
+    selectStyles = {
+        'width': "80%",
+        'margin-bottom': "5px"
+    }
 
+    constructor(private _divipola: DivipolaServiceService, private _mdl: MoodleServiceService, private fb: FormBuilder) {
+        this.courseForms = this.fb.group(
+            {
+                selectedCursos: [''],
+                psts: ['']
+            }
+        )
     }
     ngOnInit() {
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--text-color');
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
         const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+        this._mdl.getAllCourses().subscribe(data => {
+            data.shift()
+            console.log("Los cursos iniciales son: " + typeof data[1]);
+            this.cursos = data;
+        })
 
         this.basicData = {
             labels: ['No. PST Realizando Cursos', 'Total PST Inscritos'],
@@ -126,7 +148,7 @@ export class ELearningPanelMincitComponent implements OnInit {
         };
 
         this._divipola.getAllMunicipios().subscribe(data => {
-            console.log(data);
+            //console.log(data);
 
             const divipolaUnica: any[] = [];
             const divipolaSet: Set<string> = new Set();
@@ -139,7 +161,7 @@ export class ELearningPanelMincitComponent implements OnInit {
                 }
             });
             this.deptos = divipolaUnica.slice(0, 33);
-            console.log(this.deptos);
+            //console.log(this.deptos);
 
         })
     }
@@ -147,5 +169,24 @@ export class ELearningPanelMincitComponent implements OnInit {
     onSelectChange(event: any): void {
         this.selectedValue = event.target.value;
         console.log('Valor seleccionado:', this.selectedValue);
+    }
+
+    muestraSelect() {
+        const arrcursos = this.courseForms.value.selectedCursos;
+        console.log(arrcursos)
+    }
+
+    muestraPST() {
+        const arrcursos = this.courseForms.value.selectedCursos;
+        let arrPst: any[] = []
+        arrcursos.forEach((element: { id: any; }) => {
+            this._mdl.getPSTByCourse(element.id).subscribe(data => {
+                console.log("El dato devuelto es: " + data)
+                if (data.length) {
+                    arrPst.push(data[0])
+                }
+            })
+        });
+        this.psts = arrPst
     }
 }
