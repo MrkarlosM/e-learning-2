@@ -14,6 +14,7 @@
         optionLabel="fullname"
       ></p-multiSelect>
       <p-multiSelect
+        (onChange)="imprimePSTs()"
         [style]="selectStyles"
         [options]="psts"
         formControlName="selectedPSTs"
@@ -43,27 +44,29 @@
           <div class="row">
             <div class="col">
               <div class="card p-2">
-                <select class="form-select" aria-label="Default select example">
-                  <option selected>Departamentos</option>
-                  <option value="1">Dep 1</option>
-                  <option value="2">Dep 2</option>
-                </select>
-                <select
-                  class="form-select"
-                  aria-label="Default select example2"
-                >
-                  <option selected>Municipios</option>
-                  <option value="1">Mun 1</option>
-                  <option value="2">Mun 2</option>
-                </select>
-                <select
-                  class="form-select"
-                  aria-label="Default select example3"
-                >
-                  <option selected>Ubicación</option>
-                  <option value="1">Rural</option>
-                  <option value="2">Urbana</option>
-                </select>
+                <form [formGroup]="selectedFilters"></form>
+                <p-multiSelect
+                  (onChange)="muestraPST()"
+                  [style]="selectStyles"
+                  [options]="deptos"
+                  formControlName="selectedDeptos"
+                  optionLabel="dpto"
+                ></p-multiSelect>
+                <p-multiSelect
+                  (onChange)="muestraPST()"
+                  [style]="selectStyles"
+                  [options]="deptos"
+                  formControlName="selectedMpios"
+                  optionLabel="nom_mpio"
+                ></p-multiSelect>
+                <p-multiSelect
+                  (onChange)="muestraPST()"
+                  [style]="selectStyles"
+                  [options]="cursos"
+                  formControlName="selectedCursos"
+                  optionLabel="fullname"
+                ></p-multiSelect>
+                {{ deptos | json }}
                 <p-chart
                   type="doughnut"
                   [data]="basicData"
@@ -73,27 +76,27 @@
             </div>
             <div class="col">
               <div class="card p-2">
-                <select class="form-select" aria-label="Default select example">
-                  <option selected>Departamentos</option>
-                  <option value="1">Dep 1</option>
-                  <option value="2">Dep 2</option>
-                </select>
-                <select
-                  class="form-select"
-                  aria-label="Default select example2"
-                >
-                  <option selected>Municipios</option>
-                  <option value="1">Mun 1</option>
-                  <option value="2">Mun 2</option>
-                </select>
-                <select
-                  class="form-select"
-                  aria-label="Default select example3"
-                >
-                  <option selected>Ubicación</option>
-                  <option value="1">Rural</option>
-                  <option value="2">Urbana</option>
-                </select>
+                <p-multiSelect
+                  (onChange)="muestraPST()"
+                  [style]="selectStyles"
+                  [options]="cursos"
+                  formControlName="selectedCursos"
+                  optionLabel="fullname"
+                ></p-multiSelect>
+                <p-multiSelect
+                  (onChange)="muestraPST()"
+                  [style]="selectStyles"
+                  [options]="cursos"
+                  formControlName="selectedCursos"
+                  optionLabel="fullname"
+                ></p-multiSelect>
+                <p-multiSelect
+                  (onChange)="muestraPST()"
+                  [style]="selectStyles"
+                  [options]="cursos"
+                  formControlName="selectedCursos"
+                  optionLabel="fullname"
+                ></p-multiSelect>
                 <p-chart
                   type="doughnut"
                   [data]="basicData2"
@@ -104,35 +107,26 @@
             <div class="col">
               <div class="card p-2 flex justify-content-center">
                 <p-multiSelect
-                  [options]="deptos"
-                  formControlName="selectedPSTs"
-                  optionLabel="name"
+                  (onChange)="muestraPST()"
+                  [style]="selectStyles"
+                  [options]="cursos"
+                  formControlName="selectedCursos"
+                  optionLabel="fullname"
                 ></p-multiSelect>
-                <select class="form-select" aria-label="Default select example">
-                  <option selected>Departamentos</option>
-                  <option
-                    *ngFor="let depto of deptos"
-                    value="{{ depto.cod_depto }}"
-                  >
-                    {{ depto.dpto }}
-                  </option>
-                </select>
-                <select
-                  class="form-select"
-                  aria-label="Default select example2"
-                >
-                  <option selected>Municipios</option>
-                  <option value="1">Mun 1</option>
-                  <option value="2">Mun 2</option>
-                </select>
-                <select
-                  class="form-select"
-                  aria-label="Default select example3"
-                >
-                  <option selected>Ubicación</option>
-                  <option value="1">Rural</option>
-                  <option value="2">Urbana</option>
-                </select>
+                <p-multiSelect
+                  (onChange)="muestraPST()"
+                  [style]="selectStyles"
+                  [options]="cursos"
+                  formControlName="selectedCursos"
+                  optionLabel="fullname"
+                ></p-multiSelect>
+                <p-multiSelect
+                  (onChange)="muestraPST()"
+                  [style]="selectStyles"
+                  [options]="cursos"
+                  formControlName="selectedCursos"
+                  optionLabel="fullname"
+                ></p-multiSelect>
                 <p-chart
                   type="doughnut"
                   [data]="basicData3"

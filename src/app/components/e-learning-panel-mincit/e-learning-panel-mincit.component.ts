@@ -24,6 +24,10 @@ export class ELearningPanelMincitComponent implements OnInit {
     psts: any[] = [];
     selectedPSTs: any;
 
+    selectedFilters: FormGroup;
+    selectedDeptos: any;
+    selectedMpios: any;
+
     selectStyles = {
         'width': "80%",
         'margin-bottom': "5px"
@@ -33,7 +37,14 @@ export class ELearningPanelMincitComponent implements OnInit {
         this.courseForms = this.fb.group(
             {
                 selectedCursos: [''],
-                psts: ['']
+                selectedPSTs: ['']
+            }
+        )
+
+        this.selectedFilters = this.fb.group(
+            {
+                selectedDeptos: [''],
+                selectedMpios: ['']
             }
         )
     }
@@ -44,7 +55,7 @@ export class ELearningPanelMincitComponent implements OnInit {
         const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
         this._mdl.getAllCourses().subscribe(data => {
             data.shift()
-            console.log("Los cursos iniciales son: " + typeof data[1]);
+            console.log("Los cursos iniciales son: " + data);
             this.cursos = data;
         })
 
@@ -161,7 +172,7 @@ export class ELearningPanelMincitComponent implements OnInit {
                 }
             });
             this.deptos = divipolaUnica.slice(0, 33);
-            //console.log(this.deptos);
+            console.log("Los departamentos son" + this.deptos);
 
         })
     }
@@ -171,17 +182,13 @@ export class ELearningPanelMincitComponent implements OnInit {
         console.log('Valor seleccionado:', this.selectedValue);
     }
 
-    muestraSelect() {
-        const arrcursos = this.courseForms.value.selectedCursos;
-        console.log(arrcursos)
-    }
 
     muestraPST() {
         const arrcursos = this.courseForms.value.selectedCursos;
         let arrPst: any[] = []
         arrcursos.forEach((element: { id: any; }) => {
             this._mdl.getPSTByCourse(element.id).subscribe(data => {
-                console.log("El dato devuelto es: " + data)
+                console.log("El dato devuelto es: " + element.id)
                 if (data.length) {
                     arrPst.push(data[0])
                 }
@@ -189,4 +196,8 @@ export class ELearningPanelMincitComponent implements OnInit {
         });
         this.psts = arrPst
     }
+    imprimePSTs() {
+        console.log(this.courseForms.value)
+    }
+
 }
