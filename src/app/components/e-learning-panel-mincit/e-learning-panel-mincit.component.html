@@ -14,7 +14,6 @@
         optionLabel="fullname"
       ></p-multiSelect>
       <p-multiSelect
-        (onChange)="imprimePSTs()"
         [style]="selectStyles"
         [options]="psts"
         formControlName="selectedPSTs"
@@ -44,29 +43,29 @@
           <div class="row">
             <div class="col">
               <div class="card p-2">
-                <form [formGroup]="selectedFilters"></form>
+                <form [formGroup]="selectedFilters1">
                 <p-multiSelect
-                  (onChange)="muestraPST()"
+                  (onChange)="buscaMunicipios()"
                   [style]="selectStyles"
                   [options]="deptos"
                   formControlName="selectedDeptos"
                   optionLabel="dpto"
                 ></p-multiSelect>
                 <p-multiSelect
-                  (onChange)="muestraPST()"
                   [style]="selectStyles"
-                  [options]="deptos"
+                  [options]="mpios"
                   formControlName="selectedMpios"
                   optionLabel="nom_mpio"
                 ></p-multiSelect>
                 <p-multiSelect
-                  (onChange)="muestraPST()"
+                  (onChange)="imprimePSTs()"
                   [style]="selectStyles"
                   [options]="cursos"
                   formControlName="selectedCursos"
                   optionLabel="fullname"
                 ></p-multiSelect>
-                {{ deptos | json }}
+                {{ this.psts | json }}
+              </form>
                 <p-chart
                   type="doughnut"
                   [data]="basicData"

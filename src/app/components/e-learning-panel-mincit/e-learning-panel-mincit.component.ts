@@ -2,6 +2,7 @@ import { MoodleServiceService } from 'src/app/services/moodle-service.service';
 import { DivipolaServiceService } from './../../services/divipola-service.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { JsonPipe } from '@angular/common';
 
 @Component({
     selector: 'app-e-learning-panel-mincit',
@@ -18,13 +19,14 @@ export class ELearningPanelMincitComponent implements OnInit {
     selectedValue: any;
     variable: any;
     deptos: any;
+    mpios: any;
     cursos: any;
     selectedCursos: any;
     courseForms: FormGroup;
     psts: any[] = [];
     selectedPSTs: any;
 
-    selectedFilters: FormGroup;
+    selectedFilters1: FormGroup;
     selectedDeptos: any;
     selectedMpios: any;
 
@@ -41,7 +43,7 @@ export class ELearningPanelMincitComponent implements OnInit {
             }
         )
 
-        this.selectedFilters = this.fb.group(
+        this.selectedFilters1 = this.fb.group(
             {
                 selectedDeptos: [''],
                 selectedMpios: ['']
@@ -172,7 +174,7 @@ export class ELearningPanelMincitComponent implements OnInit {
                 }
             });
             this.deptos = divipolaUnica.slice(0, 33);
-            console.log("Los departamentos son" + this.deptos);
+            console.log("Los departamentos son: " + this.deptos);
 
         })
     }
@@ -186,18 +188,31 @@ export class ELearningPanelMincitComponent implements OnInit {
     muestraPST() {
         const arrcursos = this.courseForms.value.selectedCursos;
         let arrPst: any[] = []
-        arrcursos.forEach((element: { id: any; }) => {
+        arrcursos.forEach( (element: { id: any; }) => {
             this._mdl.getPSTByCourse(element.id).subscribe(data => {
-                console.log("El dato devuelto es: " + element.id)
                 if (data.length) {
                     arrPst.push(data[0])
                 }
             })
         });
         this.psts = arrPst
+        console.log("Los psts son: "+this.psts)
     }
     imprimePSTs() {
-        console.log(this.courseForms.value)
+
+    }
+
+    buscaMunicipios(){
+        const arrDptos = this.selectedFilters1.value.selectedDeptos;
+        console.log(arrDptos)
+        let arrMpios: any[] = []
+        arrDptos.forEach((element: {cod_depto: any} )=> {
+        this._divipola.getMunicipiosByDptoNumber(element.cod_depto).subscribe(data =>{
+            arrMpios.push(data)
+        })        
+        });
+        this.mpios = arrMpios
+        console.log("Los municipios son: "+ typeof this.mpios)
     }
 
 }

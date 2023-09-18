@@ -14,4 +14,8 @@ export class DivipolaServiceService {
   getAllMunicipios(): Observable<any>{
     return this.http.get(this.endpoint+`&$limit=${5000}`);
   }
+
+  getMunicipiosByDptoNumber(cod_depto: any): Observable<any>{
+    return this.http.get(this.endpoint+`&cod_depto=${cod_depto}`);
+  }
 }
