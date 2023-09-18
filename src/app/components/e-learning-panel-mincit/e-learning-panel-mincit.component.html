@@ -44,28 +44,26 @@
             <div class="col">
               <div class="card p-2">
                 <form [formGroup]="selectedFilters1">
-                <p-multiSelect
-                  (onChange)="buscaMunicipios()"
-                  [style]="selectStyles"
-                  [options]="deptos"
-                  formControlName="selectedDeptos"
-                  optionLabel="dpto"
-                ></p-multiSelect>
-                <p-multiSelect
-                  [style]="selectStyles"
-                  [options]="mpios"
-                  formControlName="selectedMpios"
-                  optionLabel="nom_mpio"
-                ></p-multiSelect>
-                <p-multiSelect
-                  (onChange)="imprimePSTs()"
-                  [style]="selectStyles"
-                  [options]="cursos"
-                  formControlName="selectedCursos"
-                  optionLabel="fullname"
-                ></p-multiSelect>
-                {{ this.psts | json }}
-              </form>
+                  <p-multiSelect
+                    (onChange)="buscaMunicipios1()"
+                    [style]="selectStyles"
+                    [options]="deptos"
+                    formControlName="selectedDeptos1"
+                    optionLabel="dpto"
+                  ></p-multiSelect>
+                  <p-multiSelect
+                    [style]="selectStyles"
+                    [options]="mpios1"
+                    formControlName="selectedMpios1"
+                    optionLabel="nom_mpio"
+                  ></p-multiSelect>
+                  <p-multiSelect
+                    [style]="selectStyles"
+                    [options]="TipoPST"
+                    formControlName="selectedTipos1"
+                    optionLabel="tipo"
+                  ></p-multiSelect>
+                </form>
                 <p-chart
                   type="doughnut"
                   [data]="basicData"
@@ -75,27 +73,27 @@
             </div>
             <div class="col">
               <div class="card p-2">
-                <p-multiSelect
-                  (onChange)="muestraPST()"
-                  [style]="selectStyles"
-                  [options]="cursos"
-                  formControlName="selectedCursos"
-                  optionLabel="fullname"
-                ></p-multiSelect>
-                <p-multiSelect
-                  (onChange)="muestraPST()"
-                  [style]="selectStyles"
-                  [options]="cursos"
-                  formControlName="selectedCursos"
-                  optionLabel="fullname"
-                ></p-multiSelect>
-                <p-multiSelect
-                  (onChange)="muestraPST()"
-                  [style]="selectStyles"
-                  [options]="cursos"
-                  formControlName="selectedCursos"
-                  optionLabel="fullname"
-                ></p-multiSelect>
+                <form [formGroup]="selectedFilters2">
+                  <p-multiSelect
+                    (onChange)="buscaMunicipios2()"
+                    [style]="selectStyles"
+                    [options]="deptos"
+                    formControlName="selectedDeptos2"
+                    optionLabel="dpto"
+                  ></p-multiSelect>
+                  <p-multiSelect
+                    [style]="selectStyles"
+                    [options]="mpios2"
+                    formControlName="selectedMpios2"
+                    optionLabel="nom_mpio"
+                  ></p-multiSelect>
+                  <p-multiSelect
+                    [style]="selectStyles"
+                    [options]="TipoPST"
+                    formControlName="tipo2"
+                    optionLabel="tipo"
+                  ></p-multiSelect>
+                </form>
                 <p-chart
                   type="doughnut"
                   [data]="basicData2"
@@ -105,32 +103,32 @@
             </div>
             <div class="col">
               <div class="card p-2 flex justify-content-center">
-                <p-multiSelect
-                  (onChange)="muestraPST()"
-                  [style]="selectStyles"
-                  [options]="cursos"
-                  formControlName="selectedCursos"
-                  optionLabel="fullname"
-                ></p-multiSelect>
-                <p-multiSelect
-                  (onChange)="muestraPST()"
-                  [style]="selectStyles"
-                  [options]="cursos"
-                  formControlName="selectedCursos"
-                  optionLabel="fullname"
-                ></p-multiSelect>
-                <p-multiSelect
-                  (onChange)="muestraPST()"
-                  [style]="selectStyles"
-                  [options]="cursos"
-                  formControlName="selectedCursos"
-                  optionLabel="fullname"
-                ></p-multiSelect>
-                <p-chart
-                  type="doughnut"
-                  [data]="basicData3"
-                  [options]="basicOptions3"
-                ></p-chart>
+                <form [formGroup]="selectedFilters3">
+                  <p-multiSelect
+                    (onChange)="buscaMunicipios3()"
+                    [style]="selectStyles"
+                    [options]="deptos"
+                    formControlName="selectedDeptos3"
+                    optionLabel="dpto"
+                  ></p-multiSelect>
+                  <p-multiSelect
+                    [style]="selectStyles"
+                    [options]="mpios3"
+                    formControlName="selectedMpios3"
+                    optionLabel="nom_mpio"
+                  ></p-multiSelect>
+                  <p-multiSelect
+                    [style]="selectStyles"
+                    [options]="TipoPST"
+                    formControlName="tipo3"
+                    optionLabel="tipo"
+                  ></p-multiSelect>
+                  <p-chart
+                    type="doughnut"
+                    [data]="basicData3"
+                    [options]="basicOptions3"
+                  ></p-chart>
+                </form>
               </div>
             </div>
           </div>

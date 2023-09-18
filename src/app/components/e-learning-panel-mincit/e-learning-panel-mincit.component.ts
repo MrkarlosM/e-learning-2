@@ -2,7 +2,7 @@ import { MoodleServiceService } from 'src/app/services/moodle-service.service';
 import { DivipolaServiceService } from './../../services/divipola-service.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { JsonPipe } from '@angular/common';
+
 
 @Component({
     selector: 'app-e-learning-panel-mincit',
@@ -35,6 +35,42 @@ export class ELearningPanelMincitComponent implements OnInit {
         'margin-bottom': "5px"
     }
 
+    TipoPST = [
+        {
+            tipo: "URBANA",
+            code: 1
+        },
+        {
+            tipo: "RURAL",
+            code: 2
+        }
+    ]
+    TipoPST2 = [
+        {
+            tipo: "URBANA",
+            code: 1
+        },
+        {
+            tipo: "RURAL",
+            code: 2
+        }
+    ]
+    TipoPST3 = [
+        {
+            tipo: "URBANA",
+            code: 1
+        },
+        {
+            tipo: "RURAL",
+            code: 2
+        }
+    ]
+    selectedFilters2: any;
+    selectedFilters3: any;
+    mpios1: any[] = [];
+    mpios2: any[] = [];
+    mpios3: any[] = [];
+
     constructor(private _divipola: DivipolaServiceService, private _mdl: MoodleServiceService, private fb: FormBuilder) {
         this.courseForms = this.fb.group(
             {
@@ -45,8 +81,22 @@ export class ELearningPanelMincitComponent implements OnInit {
 
         this.selectedFilters1 = this.fb.group(
             {
-                selectedDeptos: [''],
-                selectedMpios: ['']
+                selectedDeptos1: [''],
+                selectedMpios1: ['']
+            }
+        )
+
+        this.selectedFilters2 = this.fb.group(
+            {
+                selectedDeptos2: [''],
+                selectedMpios2: ['']
+            }
+        )
+
+        this.selectedFilters3 = this.fb.group(
+            {
+                selectedDeptos3: [''],
+                selectedMpios3: ['']
             }
         )
     }
@@ -57,7 +107,6 @@ export class ELearningPanelMincitComponent implements OnInit {
         const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
         this._mdl.getAllCourses().subscribe(data => {
             data.shift()
-            console.log("Los cursos iniciales son: " + data);
             this.cursos = data;
         })
 
@@ -181,14 +230,13 @@ export class ELearningPanelMincitComponent implements OnInit {
 
     onSelectChange(event: any): void {
         this.selectedValue = event.target.value;
-        console.log('Valor seleccionado:', this.selectedValue);
     }
 
 
     muestraPST() {
         const arrcursos = this.courseForms.value.selectedCursos;
         let arrPst: any[] = []
-        arrcursos.forEach( (element: { id: any; }) => {
+        arrcursos.forEach((element: { id: any; }) => {
             this._mdl.getPSTByCourse(element.id).subscribe(data => {
                 if (data.length) {
                     arrPst.push(data[0])
@@ -196,23 +244,55 @@ export class ELearningPanelMincitComponent implements OnInit {
             })
         });
         this.psts = arrPst
-        console.log("Los psts son: "+this.psts)
+        console.log("Los psts son: " + this.psts)
     }
     imprimePSTs() {
 
     }
 
-    buscaMunicipios(){
-        const arrDptos = this.selectedFilters1.value.selectedDeptos;
-        console.log(arrDptos)
+    buscaMunicipios1() {
+        const arrDptos = this.selectedFilters1.value.selectedDeptos1;
         let arrMpios: any[] = []
-        arrDptos.forEach((element: {cod_depto: any} )=> {
-        this._divipola.getMunicipiosByDptoNumber(element.cod_depto).subscribe(data =>{
-            arrMpios.push(data)
-        })        
+        arrDptos.forEach((element: { cod_depto: any }) => {
+            this._divipola.getMunicipiosByDptoNumber(element.cod_depto).subscribe(data => {
+                console.log("El municipio es: " + data)
+                data.forEach((element: any) => {
+                    arrMpios.push(element)
+                });
+            })
         });
-        this.mpios = arrMpios
-        console.log("Los municipios son: "+ typeof this.mpios)
+        this.mpios1 = arrMpios
+        console.log("Los municipios son: " + arrMpios)
+    }
+
+    buscaMunicipios2() {
+        const arrDptos = this.selectedFilters2.value.selectedDeptos2;
+        let arrMpios: any[] = []
+        arrDptos.forEach((element: { cod_depto: any }) => {
+            this._divipola.getMunicipiosByDptoNumber(element.cod_depto).subscribe(data => {
+                console.log("El municipio es: " + data)
+                data.forEach((element: any) => {
+                    arrMpios.push(element)
+                });
+            })
+        });
+        this.mpios2 = arrMpios
+        console.log("Los municipios son: " + arrMpios)
+    }
+
+    buscaMunicipios3() {
+        const arrDptos = this.selectedFilters3.value.selectedDeptos3;
+        let arrMpios: any[] = []
+        arrDptos.forEach((element: { cod_depto: any }) => {
+            this._divipola.getMunicipiosByDptoNumber(element.cod_depto).subscribe(data => {
+                console.log("El municipio es: " + data)
+                data.forEach((element: any) => {
+                    arrMpios.push(element)
+                });
+            })
+        });
+        this.mpios3 = arrMpios
+        console.log("Los municipios son: " + arrMpios)
     }
 
 }
