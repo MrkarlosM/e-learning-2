@@ -232,7 +232,8 @@ export class ELearningPanelMincitComponent implements OnInit {
         this.selectedValue = event.target.value;
     }
 
-
+    /*Con la lista de cursos, seleccionamos grupos: 1 Grupo = 1 PST
+    Devolvemos la lista de PSTs (Grupos)*/
     muestraPST() {
         const arrcursos = this.courseForms.value.selectedCursos;
         let arrPst: any[] = []
@@ -246,6 +247,44 @@ export class ELearningPanelMincitComponent implements OnInit {
         this.psts = arrPst
         console.log("Los psts son: " + this.psts)
     }
+
+    /*Para cada uno de los grupos, listamos los miembros (ids) de los cursos*/
+
+    listarPST() {
+        let listUser: any[] = []
+        let listPST: any[] = []
+        let listNorma: any[]=[]
+        this.courseForms.value.selectedCursos.forEach((course: any) => {
+            if (course !== undefined) {
+                listNorma.push(course.id)
+            }
+            
+        });
+        listNorma.forEach((courseID: any)=>{
+            console.log("Estoy probando con: "+courseID)
+            this._mdl.getPSTByCourse(courseID).subscribe(data => {
+                if (data[0]!== undefined){
+                    data.forEach((element: { id: any })=> {
+                        listPST.push(element.id)
+                    });
+                    console.log("Los PSTSon: "+ listPST)
+                }
+            })
+        })
+        console.log("Lista de psts: "+listPST)
+        listPST.forEach((pstID:any)=>{
+            console.log("Estoy probando con pstid: "+pstID)
+            this._mdl.getUsersByPST(pstID).subscribe(data=>{
+                if (data!== undefined){
+                    data.forEach((element: { userids: any; })=> {
+                        listUser.push(element.userids)
+                    });
+                    console.log("Los Usuarios son: "+ listUser)
+                }
+            })
+        })
+    }
+
     imprimePSTs() {
 
     }
@@ -295,14 +334,6 @@ export class ELearningPanelMincitComponent implements OnInit {
         console.log("Los municipios son: " + arrMpios)
     }
 
-    listarPST() {
-        const listUser: any[] = []
-        this.courseForms.value.selectedPSTs.forEach((element: any) => {
-            listUser.push(element.id)
-        });
-        this._mdl.getUsersByPST(this.courseForms.value.selectedPSTs).subscribe(data => {
-        })
-        console.log(listUser)
-    }
+
 
 }
