@@ -295,4 +295,14 @@ export class ELearningPanelMincitComponent implements OnInit {
         console.log("Los municipios son: " + arrMpios)
     }
 
+    listarPST() {
+        const listUser: any[] = []
+        this.courseForms.value.selectedPSTs.forEach((element: any) => {
+            listUser.push(element.id)
+        });
+        this._mdl.getUsersByPST(this.courseForms.value.selectedPSTs).subscribe(data => {
+        })
+        console.log(listUser)
+    }
+
 }

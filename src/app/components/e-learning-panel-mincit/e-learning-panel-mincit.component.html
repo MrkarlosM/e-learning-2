@@ -143,6 +143,8 @@
               >Ir a Moodle</a
             >
           </div>
+          {{ this.courseForms.value.selectedPSTs | json }}
+          <div class="btn btn-warning" (click)="listarPST()"></div>
           <div class="col"></div>
         </div>
 

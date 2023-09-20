@@ -31,4 +31,9 @@ export class MoodleServiceService {
     const mdl_function = "core_user_get_users";
     return this.http.get(this.endpoint + `&wsfunction=${mdl_function}` + "&moodlewsrestformat=json" + `criteria[0][key]=id&criteria[0][value]=${id}`);
   }
+
+  getUserByLocation(): Observable<any> | string {
+    const xd = "";
+    return xd
+  }
 }
