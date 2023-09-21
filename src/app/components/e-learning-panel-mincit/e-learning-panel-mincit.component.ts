@@ -297,6 +297,8 @@ export class ELearningPanelMincitComponent implements OnInit {
                 }
             }
         };
+
+        this.checkCourseCompletion(9, 3)
     }
 
     imprimePSTs() {
@@ -342,8 +344,11 @@ export class ELearningPanelMincitComponent implements OnInit {
         this.mpios3 = arrMpios
     }
 
-    checkCourseCompletion() {
-
+    checkCourseCompletion(userid: any, courseid: any) {
+        this._mdl.getCourseCompletionStatus(userid, courseid).subscribe(data => {
+            console.log(data.completionstatus.completed)
+        }
+        )
     }
 
 

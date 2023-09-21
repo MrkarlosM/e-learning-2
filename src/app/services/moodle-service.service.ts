@@ -29,7 +29,7 @@ export class MoodleServiceService {
 
   getUserById(id: any): Observable<any> {
     const mdl_function = "core_user_get_users";
-    return this.http.get(this.endpoint + `&wsfunction=${mdl_function}` + "&moodlewsrestformat=json" + `criteria[0][key]=id&criteria[0][value]=${id}`);
+    return this.http.get(this.endpoint + `&wsfunction=${mdl_function}` + "&moodlewsrestformat=json" + `&criteria[0][key]=id&criteria[0][value]=${id}`);
   }
 
   getUserByLocation(): Observable<any> | string {
@@ -39,6 +39,6 @@ export class MoodleServiceService {
 
   getCourseCompletionStatus(userid: any, courseid: any): Observable<any> {
     const mdl_function = "core_completion_get_course_completion_status";
-    return this.http.get(this.endpoint + `&wsfunction=${mdl_function}` + "&moodlewsrestformat=json" + `courseid=${courseid}` + `userid=${userid}`);
+    return this.http.get(this.endpoint + `&wsfunction=${mdl_function}` + "&moodlewsrestformat=json" + `&courseid=${courseid}` + `&userid=${userid}`);
   }
 }
