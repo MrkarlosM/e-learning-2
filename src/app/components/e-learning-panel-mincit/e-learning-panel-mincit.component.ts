@@ -52,6 +52,12 @@ export class ELearningPanelMincitComponent implements OnInit {
     mpios2: any[] = [];
     mpios3: any[] = [];
     testing: any
+
+    documentStyle = getComputedStyle(document.documentElement);
+    textColor = this.documentStyle.getPropertyValue('--text-color');
+    textColorSecondary = this.documentStyle.getPropertyValue('--text-color-secondary');
+    surfaceBorder = this.documentStyle.getPropertyValue('--surface-border');
+
     constructor(private _divipola: DivipolaServiceService, private _mdl: MoodleServiceService, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
         this.courseForms = this.fb.group(
             {
@@ -85,10 +91,7 @@ export class ELearningPanelMincitComponent implements OnInit {
         )
     }
     ngOnInit() {
-        const documentStyle = getComputedStyle(document.documentElement);
-        const textColor = documentStyle.getPropertyValue('--text-color');
-        const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-        const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
         this._mdl.getAllCourses().subscribe(data => {
             data.shift()
             this.cursos = data;
@@ -119,7 +122,7 @@ export class ELearningPanelMincitComponent implements OnInit {
                 },
                 legend: {
                     labels: {
-                        color: textColor
+                        color: this.textColor
                     }
                 }
             }
@@ -131,8 +134,8 @@ export class ELearningPanelMincitComponent implements OnInit {
                 {
                     label: 'Cobertura asistencia PST',
                     data: [300, 600],
-                    backgroundColor: [documentStyle.getPropertyValue('--red-500'), documentStyle.getPropertyValue('--green-500'), documentStyle.getPropertyValue('--green-500')],
-                    hoverBackgroundColor: [documentStyle.getPropertyValue('--red-400'), documentStyle.getPropertyValue('--green-400'), documentStyle.getPropertyValue('--green-400')],
+                    backgroundColor: [this.documentStyle.getPropertyValue('--red-500'), this.documentStyle.getPropertyValue('--green-500'), this.documentStyle.getPropertyValue('--green-500')],
+                    hoverBackgroundColor: [this.documentStyle.getPropertyValue('--red-400'), this.documentStyle.getPropertyValue('--green-400'), this.documentStyle.getPropertyValue('--green-400')],
                     borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
                     borderWidth: 1
                 }
@@ -151,7 +154,7 @@ export class ELearningPanelMincitComponent implements OnInit {
                 },
                 legend: {
                     labels: {
-                        color: textColor
+                        color: this.textColor
                     }
                 }
             }
@@ -163,8 +166,8 @@ export class ELearningPanelMincitComponent implements OnInit {
                 {
                     label: 'Cobertura asistencia PST',
                     data: [200, 600],
-                    backgroundColor: [documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--green-500')],
-                    hoverBackgroundColor: [documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--green-400')],
+                    backgroundColor: [this.documentStyle.getPropertyValue('--yellow-500'), this.documentStyle.getPropertyValue('--blue-500'), this.documentStyle.getPropertyValue('--green-500')],
+                    hoverBackgroundColor: [this.documentStyle.getPropertyValue('--yellow-400'), this.documentStyle.getPropertyValue('--blue-400'), this.documentStyle.getPropertyValue('--green-400')],
                     borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
                     borderWidth: 1
                 }
@@ -187,7 +190,7 @@ export class ELearningPanelMincitComponent implements OnInit {
                 },
                 legend: {
                     labels: {
-                        color: textColor
+                        color: this.textColor
                     }
                 }
             }
@@ -268,7 +271,9 @@ export class ELearningPanelMincitComponent implements OnInit {
             datasets: [
                 {
                     label: 'Cobertura asistencia PST',
-                    data: [2, listUsers.flat().length],
+                    data: [listUsers.flat().length, 100],
+                    backgroundColor: [this.documentStyle.getPropertyValue('--red-500'), this.documentStyle.getPropertyValue('--green-500'), this.documentStyle.getPropertyValue('--green-500')],
+                    hoverBackgroundColor: [this.documentStyle.getPropertyValue('--red-400'), this.documentStyle.getPropertyValue('--green-400'), this.documentStyle.getPropertyValue('--green-400')],
                     borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
                     borderWidth: 1
                 }
@@ -337,6 +342,9 @@ export class ELearningPanelMincitComponent implements OnInit {
         this.mpios3 = arrMpios
     }
 
+    checkCourseCompletion() {
+
+    }
 
 
 }
