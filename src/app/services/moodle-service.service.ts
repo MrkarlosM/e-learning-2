@@ -36,4 +36,9 @@ export class MoodleServiceService {
     const xd = "";
     return xd
   }
+
+  getCourseCompletionStatus(userid: any, courseid: any): Observable<any> {
+    const mdl_function = "core_completion_get_course_completion_status";
+    return this.http.get(this.endpoint + `&wsfunction=${mdl_function}` + "&moodlewsrestformat=json" + `courseid=${courseid}` + `userid=${userid}`);
+  }
 }
