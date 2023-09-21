@@ -24,7 +24,7 @@ export class MoodleServiceService {
 
   getUsersByPST(group: any): Observable<any> {
     const mdl_function = "core_group_get_group_members";
-    return this.http.get(this.endpoint + `&wsfunction=${mdl_function}` + "&moodlewsrestformat=json" + `&courseid=${group}`);
+    return this.http.get(this.endpoint + `&wsfunction=${mdl_function}` + "&moodlewsrestformat=json" + `&groupids[0]=${group}`);
   }
 
   getUserById(id: any): Observable<any> {

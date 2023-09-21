@@ -1,7 +1,8 @@
 import { MoodleServiceService } from 'src/app/services/moodle-service.service';
 import { DivipolaServiceService } from './../../services/divipola-service.service';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { firstValueFrom, lastValueFrom } from 'rxjs';
 
 
 @Component({
@@ -45,33 +46,13 @@ export class ELearningPanelMincitComponent implements OnInit {
             code: 2
         }
     ]
-    TipoPST2 = [
-        {
-            tipo: "URBANA",
-            code: 1
-        },
-        {
-            tipo: "RURAL",
-            code: 2
-        }
-    ]
-    TipoPST3 = [
-        {
-            tipo: "URBANA",
-            code: 1
-        },
-        {
-            tipo: "RURAL",
-            code: 2
-        }
-    ]
-    selectedFilters2: any;
-    selectedFilters3: any;
+    selectedFilters2: FormGroup;
+    selectedFilters3: FormGroup;
     mpios1: any[] = [];
     mpios2: any[] = [];
     mpios3: any[] = [];
-
-    constructor(private _divipola: DivipolaServiceService, private _mdl: MoodleServiceService, private fb: FormBuilder) {
+    testing: any
+    constructor(private _divipola: DivipolaServiceService, private _mdl: MoodleServiceService, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
         this.courseForms = this.fb.group(
             {
                 selectedCursos: [''],
@@ -82,21 +63,24 @@ export class ELearningPanelMincitComponent implements OnInit {
         this.selectedFilters1 = this.fb.group(
             {
                 selectedDeptos1: [''],
-                selectedMpios1: ['']
+                selectedMpios1: [''],
+                selectedTipos1: ['']
             }
         )
 
         this.selectedFilters2 = this.fb.group(
             {
                 selectedDeptos2: [''],
-                selectedMpios2: ['']
+                selectedMpios2: [''],
+                selectedTipos2: ['']
             }
         )
 
         this.selectedFilters3 = this.fb.group(
             {
                 selectedDeptos3: [''],
-                selectedMpios3: ['']
+                selectedMpios3: [''],
+                selectedTipos3: ['']
             }
         )
     }
@@ -210,7 +194,6 @@ export class ELearningPanelMincitComponent implements OnInit {
         };
 
         this._divipola.getAllMunicipios().subscribe(data => {
-            //console.log(data);
 
             const divipolaUnica: any[] = [];
             const divipolaSet: Set<string> = new Set();
@@ -223,8 +206,6 @@ export class ELearningPanelMincitComponent implements OnInit {
                 }
             });
             this.deptos = divipolaUnica.slice(0, 33);
-            console.log("Los departamentos son: " + this.deptos);
-
         })
     }
 
@@ -245,44 +226,72 @@ export class ELearningPanelMincitComponent implements OnInit {
             })
         });
         this.psts = arrPst
-        console.log("Los psts son: " + this.psts)
     }
 
     /*Para cada uno de los grupos, listamos los miembros (ids) de los cursos*/
 
-    listarPST() {
-        let listUser: any[] = []
+    async listarPST() {
+        let listUserofGroup: any[] = []
+        let listUsers: any[] = []
         let listPST: any[] = []
-        let listNorma: any[]=[]
+        let listNorma: any[] = []
         this.courseForms.value.selectedCursos.forEach((course: any) => {
             if (course !== undefined) {
                 listNorma.push(course.id)
             }
-            
+
         });
-        listNorma.forEach((courseID: any)=>{
-            console.log("Estoy probando con: "+courseID)
-            this._mdl.getPSTByCourse(courseID).subscribe(data => {
-                if (data[0]!== undefined){
-                    data.forEach((element: { id: any })=> {
-                        listPST.push(element.id)
-                    });
-                    console.log("Los PSTSon: "+ listPST)
+        await Promise.all(listNorma.map(async (courseID: any) => {
+            let data = await firstValueFrom(this._mdl.getPSTByCourse(courseID))
+            if (data[0] !== undefined) {
+                data.forEach((element: { id: any }) => {
+                    listPST.push(element.id)
+                });
+            }
+        }));
+        console.log("Lista de psts:", listPST)
+        await Promise.all(listPST.map(async (pstID: any) => {
+            console.log("Usaré el id: ", pstID)
+            let data = await firstValueFrom(this._mdl.getUsersByPST(pstID))
+            console.log(data)
+            if (data[0] !== undefined) {
+                listUserofGroup.push(data[0])
+                listUsers.push(data[0].userids)
+            }
+        }))
+        this.basicData2.datasets[0].data = [2, listUsers.flat().length]
+        console.log("Los Usuarios por grupo son: ", listUserofGroup)
+        console.log("Los Usuarios totales son: ", listUsers.flat().length)
+        console.log(this.basicData2.datasets[0].data)
+        this.basicData2 = {
+            labels: ['Total Cursos Terminados por PST', 'Total Matriculados'],
+            datasets: [
+                {
+                    label: 'Cobertura asistencia PST',
+                    data: [2, listUsers.flat().length],
+                    borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
+                    borderWidth: 1
                 }
-            })
-        })
-        console.log("Lista de psts: "+listPST)
-        listPST.forEach((pstID:any)=>{
-            console.log("Estoy probando con pstid: "+pstID)
-            this._mdl.getUsersByPST(pstID).subscribe(data=>{
-                if (data!== undefined){
-                    data.forEach((element: { userids: any; })=> {
-                        listUser.push(element.userids)
-                    });
-                    console.log("Los Usuarios son: "+ listUser)
+            ]
+        };
+
+        this.basicOptions2 = {
+            cutout: '60%',
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Deserción',
+                    font: {
+                        size: 20
+                    }
+                },
+                legend: {
+                    labels: {
+
+                    }
                 }
-            })
-        })
+            }
+        };
     }
 
     imprimePSTs() {
@@ -294,14 +303,12 @@ export class ELearningPanelMincitComponent implements OnInit {
         let arrMpios: any[] = []
         arrDptos.forEach((element: { cod_depto: any }) => {
             this._divipola.getMunicipiosByDptoNumber(element.cod_depto).subscribe(data => {
-                console.log("El municipio es: " + data)
                 data.forEach((element: any) => {
                     arrMpios.push(element)
                 });
             })
         });
         this.mpios1 = arrMpios
-        console.log("Los municipios son: " + arrMpios)
     }
 
     buscaMunicipios2() {
@@ -309,14 +316,12 @@ export class ELearningPanelMincitComponent implements OnInit {
         let arrMpios: any[] = []
         arrDptos.forEach((element: { cod_depto: any }) => {
             this._divipola.getMunicipiosByDptoNumber(element.cod_depto).subscribe(data => {
-                console.log("El municipio es: " + data)
                 data.forEach((element: any) => {
                     arrMpios.push(element)
                 });
             })
         });
         this.mpios2 = arrMpios
-        console.log("Los municipios son: " + arrMpios)
     }
 
     buscaMunicipios3() {
@@ -324,14 +329,12 @@ export class ELearningPanelMincitComponent implements OnInit {
         let arrMpios: any[] = []
         arrDptos.forEach((element: { cod_depto: any }) => {
             this._divipola.getMunicipiosByDptoNumber(element.cod_depto).subscribe(data => {
-                console.log("El municipio es: " + data)
                 data.forEach((element: any) => {
                     arrMpios.push(element)
                 });
             })
         });
         this.mpios3 = arrMpios
-        console.log("Los municipios son: " + arrMpios)
     }
 
 

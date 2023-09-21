@@ -90,11 +90,12 @@
                   <p-multiSelect
                     [style]="selectStyles"
                     [options]="TipoPST"
-                    formControlName="tipo2"
+                    formControlName="selectedTipos2"
                     optionLabel="tipo"
                   ></p-multiSelect>
                 </form>
                 <p-chart
+                  #chart
                   type="doughnut"
                   [data]="basicData2"
                   [options]="basicOptions2"
@@ -120,7 +121,7 @@
                   <p-multiSelect
                     [style]="selectStyles"
                     [options]="TipoPST"
-                    formControlName="tipo3"
+                    formControlName="selectedTipos3"
                     optionLabel="tipo"
                   ></p-multiSelect>
                   <p-chart
@@ -143,7 +144,8 @@
               >Ir a Moodle</a
             >
           </div>
-          <div class="btn btn-warning" (click)="listarPST()"></div>
+          {{ testing | json }}
+          <div class="btn btn-warning" (click)="listarPST()">"Oprime"</div>
           <div class="col"></div>
         </div>
 
