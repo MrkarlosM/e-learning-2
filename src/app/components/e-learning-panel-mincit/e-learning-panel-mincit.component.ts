@@ -218,32 +218,38 @@ export class ELearningPanelMincitComponent implements OnInit {
 
     /*Con la lista de cursos, seleccionamos grupos: 1 Grupo = 1 PST
     Devolvemos la lista de PSTs (Grupos)*/
-    muestraPST() {
+    async muestraPST() {
+        //Recibe valores de cursos
         const arrcursos = this.courseForms.value.selectedCursos;
+        //Arreglo de grupos (PSTs)
         let arrPst: any[] = []
-        arrcursos.forEach((element: { id: any; }) => {
-            this._mdl.getPSTByCourse(element.id).subscribe(data => {
-                if (data.length) {
-                    arrPst.push(data[0])
-                }
-            })
-        });
+        //Promesa que extrae los Grupos al ingresar la id del curso
+        await Promise.all(arrcursos.map(async (courseID: any)=>{
+            let data = await firstValueFrom(this._mdl.getPSTByCourse(courseID.id))
+            if (data[0] !== undefined) {
+                data.forEach((element: any) => {
+                    arrPst.push(element)
+                });
+            }
+        }))
         this.psts = arrPst
     }
 
-    /*Para cada uno de los grupos, listamos los miembros (ids) de los cursos*/
-
+    /*Listamos los usuarios de los PSTs seleccionados*/
     async listarPST() {
+
         let listUserofGroup: any[] = []
         let listUsers: any[] = []
         let listPST: any[] = []
         let listNorma: any[] = []
+        //De los cursos seleccionados obtenemos la id de los cursos
         this.courseForms.value.selectedCursos.forEach((course: any) => {
             if (course !== undefined) {
                 listNorma.push(course.id)
             }
-
         });
+
+        //Obtenemos los grupos (PSTs) de las id de los cursos
         await Promise.all(listNorma.map(async (courseID: any) => {
             let data = await firstValueFrom(this._mdl.getPSTByCourse(courseID))
             if (data[0] !== undefined) {
@@ -252,7 +258,8 @@ export class ELearningPanelMincitComponent implements OnInit {
                 });
             }
         }));
-        console.log("Lista de psts:", listPST)
+
+        //Obtenemos los usuarios de esos grupos (psts)
         await Promise.all(listPST.map(async (pstID: any) => {
             console.log("Usaré el id: ", pstID)
             let data = await firstValueFrom(this._mdl.getUsersByPST(pstID))
@@ -262,16 +269,17 @@ export class ELearningPanelMincitComponent implements OnInit {
                 listUsers.push(data[0].userids)
             }
         }))
-        this.basicData2.datasets[0].data = [2, listUsers.flat().length]
-        console.log("Los Usuarios por grupo son: ", listUserofGroup)
-        console.log("Los Usuarios totales son: ", listUsers.flat().length)
-        console.log(this.basicData2.datasets[0].data)
+
+        //Verificamos si completaron o no.
+        let completed = await this.checkCourseCompletion([listNorma, listUsers.flat()])
+        console.log("COMPLETADOS", completed)
+        //Ponemos los datos para visualizar
         this.basicData2 = {
             labels: ['Total Cursos Terminados por PST', 'Total Matriculados'],
             datasets: [
                 {
                     label: 'Cobertura asistencia PST',
-                    data: [listUsers.flat().length, 100],
+                    data: [completed, listUsers.flat().length],
                     backgroundColor: [this.documentStyle.getPropertyValue('--red-500'), this.documentStyle.getPropertyValue('--green-500'), this.documentStyle.getPropertyValue('--green-500')],
                     hoverBackgroundColor: [this.documentStyle.getPropertyValue('--red-400'), this.documentStyle.getPropertyValue('--green-400'), this.documentStyle.getPropertyValue('--green-400')],
                     borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
@@ -279,7 +287,6 @@ export class ELearningPanelMincitComponent implements OnInit {
                 }
             ]
         };
-
         this.basicOptions2 = {
             cutout: '60%',
             plugins: {
@@ -292,13 +299,10 @@ export class ELearningPanelMincitComponent implements OnInit {
                 },
                 legend: {
                     labels: {
-
                     }
                 }
             }
         };
-
-        this.checkCourseCompletion(9, 3)
     }
 
     imprimePSTs() {
@@ -344,12 +348,34 @@ export class ELearningPanelMincitComponent implements OnInit {
         this.mpios3 = arrMpios
     }
 
-    checkCourseCompletion(userid: any, courseid: any) {
-        this._mdl.getCourseCompletionStatus(userid, courseid).subscribe(data => {
-            console.log(data.completionstatus.completed)
-        }
-        )
+    async checkCourseCompletion(usuarioCursos: any) {
+        let completed = 0;
+        let incomplete = 0;
+        await Promise.all(usuarioCursos[0].map(
+            async (curso: any) => {
+                await Promise.all(usuarioCursos[1].map(
+                    async (usuario: any) => {
+                        try {
+                            let data = await firstValueFrom(this._mdl.getCourseCompletionStatus(usuario, curso))
+                            switch (data.completionstatus.completed) {
+                                case true:
+                                    completed = completed + 1;
+                                    break;
+                                case false:
+                                    incomplete = incomplete + 1;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        } catch (error) {
+                        }
+                        console.log("El total de completas es: ", completed, " mientras que el total de incompletas es: ", incomplete)
+                    }
+                ));
+            }
+        ));
+        console.log("Voy a mandar: ", completed, " y ", incomplete);
+        return completed;
     }
-
 
 }

@@ -16,27 +16,31 @@ export class MoodleServiceService {
     return this.http.get(this.endpoint + `&wsfunction=${mdl_function}` + "&moodlewsrestformat=json");
   }
 
-  //PST dado un curso
+  //Obtiene los grupos de los cursos
   getPSTByCourse(course: any): Observable<any> {
     const mdl_function = "core_group_get_course_groups";
     return this.http.get(this.endpoint + `&wsfunction=${mdl_function}` + "&moodlewsrestformat=json" + `&courseid=${course}`);
   }
 
+  //Obtiene los miembros del grupo
   getUsersByPST(group: any): Observable<any> {
     const mdl_function = "core_group_get_group_members";
     return this.http.get(this.endpoint + `&wsfunction=${mdl_function}` + "&moodlewsrestformat=json" + `&groupids[0]=${group}`);
   }
 
+  //Obtiene usuarios por su ID
   getUserById(id: any): Observable<any> {
     const mdl_function = "core_user_get_users";
     return this.http.get(this.endpoint + `&wsfunction=${mdl_function}` + "&moodlewsrestformat=json" + `&criteria[0][key]=id&criteria[0][value]=${id}`);
   }
 
+  //
   getUserByLocation(): Observable<any> | string {
     const xd = "";
     return xd
   }
 
+  //Obtiene el estado de completitud de un curso por parte de un usuario con su userid y su courseid
   getCourseCompletionStatus(userid: any, courseid: any): Observable<any> {
     const mdl_function = "core_completion_get_course_completion_status";
     return this.http.get(this.endpoint + `&wsfunction=${mdl_function}` + "&moodlewsrestformat=json" + `&courseid=${courseid}` + `&userid=${userid}`);
