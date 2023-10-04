@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { MoodleServiceService } from 'src/app/services/moodle-service.service';
 
 @Component({
     selector: 'app-e-learning-panel',
@@ -21,14 +22,18 @@ export class ELearningPanelComponent implements OnInit {
     options2: any;
     tableArray: any;
     tableArray2: any;
+    usuarioPST: any;
+    estudiantes: any;
+
+    constructor(private _mdl: MoodleServiceService){
+
+    }
 
     ngOnInit() {
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--text-color');
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
         const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-
-
         switch (this.inputFromMinCIT) {
             default:
                 this.basicData = {
@@ -236,7 +241,13 @@ export class ELearningPanelComponent implements OnInit {
                 ];
         }
         let arrGraphs = [documentStyle, textColor, textColorSecondary, surfaceBorder]
+        let courseID: number = 3
+        let groupID: number = 4;
+        this.getPST(courseID);
+        this.getUsersofST(groupID);
+
         return arrGraphs
+
     }
     ngOnChanges(inputFromMinCIT: SimpleChanges, arrGraphs: any) {
         const documentStyle = getComputedStyle(document.documentElement);
@@ -629,5 +640,135 @@ export class ELearningPanelComponent implements OnInit {
                 },
             ];
         }
+    }
+
+    /*Obtiene los integrantes del grupo (PST)*/
+    
+    async getPST(courseID: any){
+        const idBuscado = 4
+        this._mdl.getPSTByCourse(courseID).subscribe(
+            grupos =>{
+                let grupoActual = grupos.find((grupo: { id: any; }) => grupo.id === idBuscado);
+                if (grupoActual) {
+                    // Maneja el objeto encontrado
+                    console.log('Grupo encontrado:', grupoActual);
+                    this.usuarioPST = grupoActual;
+                  } else {
+                    // Maneja el caso en que no se encontró el objeto con el ID específico
+                    console.log('Grupo no encontrado');
+                  }
+            }
+        )
+    }
+
+    getUsersofST(groupID: any){
+        const documentStyle = getComputedStyle(document.documentElement);
+        const textColor = documentStyle.getPropertyValue('--text-color');
+        this._mdl.getUsersByPST(groupID).subscribe(
+            users =>{
+                this.estudiantes = users[0].userids;
+                this.basicData = {
+                    labels: ['Colaboradores que han Finalizado Cursos', 'Total Colaboradores Matriculados'],
+                    datasets: [
+                        {
+                            label: 'Cobertura asistencia PST',
+                            data: [7, this.estudiantes.length],
+                            backgroundColor: ['rgba(255, 159, 64, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)'],
+                            borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
+                            borderWidth: 1
+                        }
+                    ]
+                };
+        
+                this.basicOptions = {
+                    cutout: '60%',
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Cobertura Asistencia',
+                            font: {
+                                size: 20
+                            },
+                        },
+                        legend: {
+                            labels: {
+                                color: textColor
+                            }
+                        }
+                    }
+                };
+        
+                this.basicData2 = {
+                    labels: ['Colaboradores que Iniciaron y No han Finalizado Cursos', 'Total Colaboradores Matriculados'],
+                    datasets: [
+                        {
+                            label: 'Cobertura asistencia PST',
+                            data: [3, this.estudiantes.length],
+                            backgroundColor: [documentStyle.getPropertyValue('--red-500'), documentStyle.getPropertyValue('--green-500'), documentStyle.getPropertyValue('--green-500')],
+                            hoverBackgroundColor: [documentStyle.getPropertyValue('--red-400'), documentStyle.getPropertyValue('--green-400'), documentStyle.getPropertyValue('--green-400')],
+                            borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
+                            borderWidth: 1
+                        }
+                    ]
+                };
+        
+                this.basicOptions2 = {
+                    cutout: '60%',
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Deserción',
+                            font: {
+                                size: 20
+                            }
+                        },
+                        legend: {
+                            labels: {
+                                color: textColor
+                            }
+                        }
+                    }
+                };
+        
+                this.basicData3 = {
+                    labels: ['Colaboradores que finalizaron OVA', 'Total Colaboradores Matriculados'],
+                    datasets: [
+                        {
+                            label: 'Cobertura asistencia PST',
+                            data: [4, this.estudiantes.length],
+                            backgroundColor: [documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--green-500')],
+                            hoverBackgroundColor: [documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--green-400')],
+                            borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
+                            borderWidth: 1
+                        }
+                    ]
+                };
+        
+                this.basicOptions3 = {
+                    cutout: '60%',
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Cumplimiento OVA',
+                            font: {
+                                size: 20
+                            },
+                            padding: {
+                                top: 10,
+                                bottom: 10
+                            }
+                        },
+                        legend: {
+                            labels: {
+                                color: textColor
+                            }
+                        }
+                    }
+                };
+
+            }
+        )
+        
+
     }
 }
