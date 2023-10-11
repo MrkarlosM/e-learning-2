@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Observable, firstValueFrom, forkJoin } from 'rxjs';
 import { MoodleServiceService } from 'src/app/services/moodle-service.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { MoodleServiceService } from 'src/app/services/moodle-service.service';
 })
 export class ELearningPanelComponent implements OnInit {
 
-    @Input() inputFromMinCIT: string = "";
+    @Input() inputFromMinCIT: string = "3";
 
     basicData: any;
     basicOptions: any;
@@ -25,228 +26,19 @@ export class ELearningPanelComponent implements OnInit {
     usuarioPST: any;
     estudiantes: any;
 
-    constructor(private _mdl: MoodleServiceService){
+    constructor(private _mdl: MoodleServiceService) {
 
     }
 
-    ngOnInit() {
-        const documentStyle = getComputedStyle(document.documentElement);
-        const textColor = documentStyle.getPropertyValue('--text-color');
-        const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-        const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-        switch (this.inputFromMinCIT) {
-            default:
-                this.basicData = {
-                    labels: ['Colaboradores que han Finalizado Cursos', 'Total Colaboradores Matriculados'],
-                    datasets: [
-                        {
-                            label: 'Cobertura asistencia PST',
-                            data: [7, 10],
-                            backgroundColor: ['rgba(255, 159, 64, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)'],
-                            borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
-                            borderWidth: 1
-                        }
-                    ]
-                };
-
-                this.basicOptions = {
-                    cutout: '60%',
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Cobertura Asistencia',
-                            font: {
-                                size: 20
-                            },
-                        },
-                        legend: {
-                            labels: {
-                                color: textColor
-                            }
-                        }
-                    }
-                };
-
-                this.basicData2 = {
-                    labels: ['Colaboradores que Iniciaron y No han Finalizado Cursos', 'Total Colaboradores Matriculados'],
-                    datasets: [
-                        {
-                            label: 'Cobertura asistencia PST',
-                            data: [3, 10],
-                            backgroundColor: [documentStyle.getPropertyValue('--red-500'), documentStyle.getPropertyValue('--green-500'), documentStyle.getPropertyValue('--green-500')],
-                            hoverBackgroundColor: [documentStyle.getPropertyValue('--red-400'), documentStyle.getPropertyValue('--green-400'), documentStyle.getPropertyValue('--green-400')],
-                            borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
-                            borderWidth: 1
-                        }
-                    ]
-                };
-
-                this.basicOptions2 = {
-                    cutout: '60%',
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Deserción',
-                            font: {
-                                size: 20
-                            }
-                        },
-                        legend: {
-                            labels: {
-                                color: textColor
-                            }
-                        }
-                    }
-                };
-
-                this.basicData3 = {
-                    labels: ['Colaboradores que finalizaron OVA', 'Total Colaboradores Matriculados'],
-                    datasets: [
-                        {
-                            label: 'Cobertura asistencia PST',
-                            data: [4, 10],
-                            backgroundColor: [documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--green-500')],
-                            hoverBackgroundColor: [documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--green-400')],
-                            borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
-                            borderWidth: 1
-                        }
-                    ]
-                };
-
-                this.basicOptions3 = {
-                    cutout: '60%',
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Cumplimiento OVA',
-                            font: {
-                                size: 20
-                            },
-                            padding: {
-                                top: 10,
-                                bottom: 10
-                            }
-                        },
-                        legend: {
-                            labels: {
-                                color: textColor
-                            }
-                        }
-                    }
-                };
-
-                this.data = {
-                    labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
-                    datasets: [
-                        {
-                            label: 'Horas diarias',
-                            data: [6, 2, 1, 8, 2, 1, 4],
-                            fill: false,
-                            borderColor: documentStyle.getPropertyValue('--blue-500'),
-                            tension: 0.4
-                        }
-                    ]
-                };
-
-                this.options = {
-                    maintainAspectRatio: false,
-                    aspectRatio: 1,
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: textColor
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            ticks: {
-                                color: textColorSecondary
-                            },
-                            grid: {
-                                color: surfaceBorder,
-                                drawBorder: false
-                            }
-                        },
-                        y: {
-                            ticks: {
-                                color: textColorSecondary
-                            },
-                            grid: {
-                                color: surfaceBorder,
-                                drawBorder: false
-                            }
-                        }
-                    }
-                };
-                this.data2 = {
-                    labels: ['Ambiental', 'Sociocultural', 'Económico', 'Estructura Alto Nivel', 'Mejora'],
-                    datasets: [
-                        {
-                            label: 'Programa de Sostenibilidad',
-                            borderColor: documentStyle.getPropertyValue('--red-400'),
-                            pointBackgroundColor: documentStyle.getPropertyValue('--red-400'),
-                            pointBorderColor: documentStyle.getPropertyValue('--red-400'),
-                            pointHoverBackgroundColor: textColor,
-                            pointHoverBorderColor: documentStyle.getPropertyValue('--red-400'),
-                            data: [65, 59, 90, 81, 56]
-                        }
-                    ]
-                };
-
-                this.options2 = {
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: textColor
-                            }
-                        }
-                    },
-                    scales: {
-                        r: {
-                            grid: {
-                                color: textColorSecondary
-                            },
-                            pointLabels: {
-                                color: textColorSecondary
-                            }
-                        }
-                    }
-                };
-                this.tableArray = [
-                    {
-                        MoodleID: 1,
-                        nombre: "Juan Díaz",
-                        nota1: "5",
-                        nota2: "4",
-                        nota3: "1",
-                        notaf: "3.33"
-                    },
-                    {
-                        MoodleID: 2,
-                        nombre: "Pedro Jiménez",
-                        nota1: "5",
-                        nota2: "3",
-                        nota3: "3",
-                        notaf: "3.66"
-                    },
-                    {
-                        MoodleID: 3,
-                        nombre: "Carlos Martínez",
-                        nota1: "5",
-                        nota2: "5",
-                        nota3: "5",
-                        notaf: "5"
-                    },
-                ];
-        }
-        let arrGraphs = [documentStyle, textColor, textColorSecondary, surfaceBorder]
-        let courseID: number = 3
+    async ngOnInit() {
+        this.updateGraphs(0,0,0);
+        let courseID = this.inputFromMinCIT;
         let groupID: number = 4;
-        this.getPST(courseID);
-        this.getUsersofST(groupID);
-
-        return arrGraphs
+        this.getPST(courseID, groupID);
+        let users = await this.getUsersofST(groupID);
+        let status = await this.getCompletion(users, courseID)
+        this.updateGraphs(users.length, status.completed, status.incomplete);
+        
 
     }
     ngOnChanges(inputFromMinCIT: SimpleChanges, arrGraphs: any) {
@@ -642,133 +434,177 @@ export class ELearningPanelComponent implements OnInit {
         }
     }
 
-    /*Obtiene los integrantes del grupo (PST)*/
-    
-    async getPST(courseID: any){
-        const idBuscado = 4
-        this._mdl.getPSTByCourse(courseID).subscribe(
-            grupos =>{
-                let grupoActual = grupos.find((grupo: { id: any; }) => grupo.id === idBuscado);
-                if (grupoActual) {
-                    // Maneja el objeto encontrado
-                    console.log('Grupo encontrado:', grupoActual);
-                    this.usuarioPST = grupoActual;
-                  } else {
-                    // Maneja el caso en que no se encontró el objeto con el ID específico
-                    console.log('Grupo no encontrado');
-                  }
+    /*Obtiene un PST particular
+    courseID = ID Norma
+    groupID = ID PST
+    */
+    async getPST(courseID: any, groupID: any) {
+        try {
+            const grupos = await firstValueFrom(this._mdl.getPSTByCourse(courseID));
+            const grupoActual = grupos.find((grupo: { id: any }) => grupo.id === groupID);
+
+            if (grupoActual) {
+                console.log('Grupo encontrado:', grupoActual);
+                this.usuarioPST = grupoActual;
+                console.log("Id PST:", this.usuarioPST.id);
+                return this.usuarioPST.id;
+            } else {
+                console.log('Grupo no encontrado');
+                return null; // Otra acción en caso de que el grupo no se encuentre
             }
-        )
+        } catch (error) {
+            console.error('Error en la suscripción:', error);
+            throw error;
+        }
     }
 
-    getUsersofST(groupID: any){
+    updateGraphs(totalUsers: any, statusCompleted: any, statusIncompleted: any) {
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--text-color');
-        this._mdl.getUsersByPST(groupID).subscribe(
-            users =>{
-                this.estudiantes = users[0].userids;
-                this.basicData = {
-                    labels: ['Colaboradores que han Finalizado Cursos', 'Total Colaboradores Matriculados'],
-                    datasets: [
-                        {
-                            label: 'Cobertura asistencia PST',
-                            data: [7, this.estudiantes.length],
-                            backgroundColor: ['rgba(255, 159, 64, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)'],
-                            borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
-                            borderWidth: 1
-                        }
-                    ]
-                };
-        
-                this.basicOptions = {
-                    cutout: '60%',
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Cobertura Asistencia',
-                            font: {
-                                size: 20
-                            },
-                        },
-                        legend: {
-                            labels: {
-                                color: textColor
-                            }
-                        }
-                    }
-                };
-        
-                this.basicData2 = {
-                    labels: ['Colaboradores que Iniciaron y No han Finalizado Cursos', 'Total Colaboradores Matriculados'],
-                    datasets: [
-                        {
-                            label: 'Cobertura asistencia PST',
-                            data: [3, this.estudiantes.length],
-                            backgroundColor: [documentStyle.getPropertyValue('--red-500'), documentStyle.getPropertyValue('--green-500'), documentStyle.getPropertyValue('--green-500')],
-                            hoverBackgroundColor: [documentStyle.getPropertyValue('--red-400'), documentStyle.getPropertyValue('--green-400'), documentStyle.getPropertyValue('--green-400')],
-                            borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
-                            borderWidth: 1
-                        }
-                    ]
-                };
-        
-                this.basicOptions2 = {
-                    cutout: '60%',
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Deserción',
-                            font: {
-                                size: 20
-                            }
-                        },
-                        legend: {
-                            labels: {
-                                color: textColor
-                            }
-                        }
-                    }
-                };
-        
-                this.basicData3 = {
-                    labels: ['Colaboradores que finalizaron OVA', 'Total Colaboradores Matriculados'],
-                    datasets: [
-                        {
-                            label: 'Cobertura asistencia PST',
-                            data: [4, this.estudiantes.length],
-                            backgroundColor: [documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--green-500')],
-                            hoverBackgroundColor: [documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--green-400')],
-                            borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
-                            borderWidth: 1
-                        }
-                    ]
-                };
-        
-                this.basicOptions3 = {
-                    cutout: '60%',
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Cumplimiento OVA',
-                            font: {
-                                size: 20
-                            },
-                            padding: {
-                                top: 10,
-                                bottom: 10
-                            }
-                        },
-                        legend: {
-                            labels: {
-                                color: textColor
-                            }
-                        }
-                    }
-                };
+        console.log("Los estudiantes son: ", totalUsers)
 
+        this.basicData = {
+            labels: ['Colaboradores que han Finalizado Cursos', 'Total Colaboradores Matriculados'],
+            datasets: [
+                {
+                    label: 'Cobertura asistencia PST',
+                    data: [statusCompleted, totalUsers],
+                    backgroundColor: ['rgba(255, 159, 64, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)'],
+                    borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        this.basicOptions = {
+            cutout: '60%',
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Cobertura Asistencia',
+                    font: {
+                        size: 20
+                    },
+                },
+                legend: {
+                    labels: {
+                        color: textColor
+                    }
+                }
             }
-        )
-        
+        };
+
+        this.basicData2 = {
+            labels: ['Colaboradores que Iniciaron y No han Finalizado Cursos', 'Total Colaboradores Matriculados'],
+            datasets: [
+                {
+                    label: 'Cobertura asistencia PST',
+                    data: [statusIncompleted, totalUsers],
+                    backgroundColor: [documentStyle.getPropertyValue('--red-500'), documentStyle.getPropertyValue('--green-500'), documentStyle.getPropertyValue('--green-500')],
+                    hoverBackgroundColor: [documentStyle.getPropertyValue('--red-400'), documentStyle.getPropertyValue('--green-400'), documentStyle.getPropertyValue('--green-400')],
+                    borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        this.basicOptions2 = {
+            cutout: '60%',
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Deserción',
+                    font: {
+                        size: 20
+                    }
+                },
+                legend: {
+                    labels: {
+                        color: textColor
+                    }
+                }
+            }
+        };
+
+        this.basicData3 = {
+            labels: ['Colaboradores que finalizaron OVA', 'Total Colaboradores Matriculados'],
+            datasets: [
+                {
+                    label: 'Cobertura asistencia PST',
+                    data: [4, totalUsers],
+                    backgroundColor: [documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--green-500')],
+                    hoverBackgroundColor: [documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--green-400')],
+                    borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        this.basicOptions3 = {
+            cutout: '60%',
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Cumplimiento OVA',
+                    font: {
+                        size: 20
+                    },
+                    padding: {
+                        top: 10,
+                        bottom: 10
+                    }
+                },
+                legend: {
+                    labels: {
+                        color: textColor
+                    }
+                }
+            }
+        };
 
     }
-}
+
+    async getUsersofST(groupID: any) {
+        try {
+            const users = await firstValueFrom(this._mdl.getUsersByPST(groupID));
+            this.estudiantes = users[0].userids;
+            console.log(this.estudiantes);
+            return this.estudiantes;
+        } catch (error) {
+            console.error('Error en la suscripción:', error);
+            throw error;
+        }
+    }
+
+    async getCompletion(userIDs: any[], courseID: any) {
+        let completed = 0;
+        let incomplete = 0;
+      
+        await Promise.all(
+          userIDs.map(async (usuario: any) => {
+            try {
+              const data = await firstValueFrom(this._mdl.getCourseCompletionStatus(usuario, courseID));
+              switch (data.completionstatus.completed) {
+                case true:
+                  completed++;
+                  break;
+                case false:
+                  incomplete++;
+                  break;
+                default:
+                  break;
+              }
+            } catch (error) {
+              // Manejar errores si es necesario
+            }
+          })
+        );
+      
+        const result = { completed, incomplete };
+      
+        console.log("El total de completos es:", result.completed, "mientras que el total de incompletos es:", result.incomplete);
+      
+        return result;
+      }
+
+    }
