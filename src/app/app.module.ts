@@ -12,12 +12,14 @@ import { MenubarModule } from 'primeng/menubar';
 import { ChartModule } from 'primeng/chart';
 import { ELearningPanelMincitComponent } from './components/e-learning-panel-mincit/e-learning-panel-mincit.component';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { FiltersComponent } from './components/filters/filters.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ELearningPanelComponent,
-    ELearningPanelMincitComponent
+    ELearningPanelMincitComponent,
+    FiltersComponent
   ],
   imports: [
     BrowserModule,

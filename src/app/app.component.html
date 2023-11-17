@@ -6,17 +6,23 @@
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">PST</button>
+    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#user-tab-pane" type="button" role="tab" aria-controls="user-tab-pane" aria-selected="true">PST</button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">MinCIT</button>
+    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#mincit-tab-pane" type="button" role="tab" aria-controls="mincit-tab-pane" aria-selected="false">MinCIT</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="test-tab" data-bs-toggle="tab" data-bs-target="#test-tab-pane" type="button" role="tab" aria-controls="test-tab-pane" aria-selected="false">Test</button>
   </li>
 </ul>
 <div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+  <div class="tab-pane fade show active" id="user-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
     <app-e-learning-panel></app-e-learning-panel>
   </div>
-  <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+  <div class="tab-pane fade" id="mincit-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
     <app-e-learning-panel-mincit></app-e-learning-panel-mincit>
+  </div>
+  <div class="tab-pane fade" id="test-tab-pane" role="tabpanel" aria-labelledby="test-tab" tabindex="0">
+    <app-filters></app-filters>
   </div>
 </div>

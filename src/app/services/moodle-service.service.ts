@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MoodleServiceService {
-  endpoint: string = "https://intisof.com/moodle/webservice/rest/server.php?wstoken=572a4be5e96480be08346559ac5080ca"
+  endpoint: string = "http://54.225.85.252/webservice/rest/server.php?wstoken=b69e8b651438713eb871e59b4ad64947"
 
   constructor(public http: HttpClient) { }
   //Todos los cursos

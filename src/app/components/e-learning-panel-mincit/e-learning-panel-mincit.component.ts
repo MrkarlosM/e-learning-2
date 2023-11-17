@@ -36,6 +36,12 @@ export class ELearningPanelMincitComponent implements OnInit {
         'margin-bottom': "5px"
     }
 
+    selectStyles2 = {
+        'width': "80%",
+        'margin-bottom': "5px",
+        'max-width': "250px"
+    }
+
     TipoPST = [
         {
             tipo: "URBANA",
@@ -95,6 +101,7 @@ export class ELearningPanelMincitComponent implements OnInit {
         this._mdl.getAllCourses().subscribe(data => {
             data.shift()
             this.cursos = data;
+            console.log("Los cursos si son", this.cursos)
         })
 
         this.basicData = {

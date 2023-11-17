@@ -5,7 +5,9 @@
     la formación.
   </h3>
   <div class="container text-center mt-4">
+    
     <form [formGroup]="courseForms">
+      
       <p-multiSelect
         (onChange)="muestraPST()"
         [style]="selectStyles"
@@ -46,19 +48,19 @@
                 <form [formGroup]="selectedFilters1">
                   <p-multiSelect
                     (onChange)="buscaMunicipios1()"
-                    [style]="selectStyles"
+                    [style]="selectStyles2"
                     [options]="deptos"
                     formControlName="selectedDeptos1"
                     optionLabel="dpto"
                   ></p-multiSelect>
                   <p-multiSelect
-                    [style]="selectStyles"
+                    [style]="selectStyles2"
                     [options]="mpios1"
                     formControlName="selectedMpios1"
                     optionLabel="nom_mpio"
                   ></p-multiSelect>
                   <p-multiSelect
-                    [style]="selectStyles"
+                    [style]="selectStyles2"
                     [options]="TipoPST"
                     formControlName="selectedTipos1"
                     optionLabel="tipo"
@@ -76,19 +78,19 @@
                 <form [formGroup]="selectedFilters2">
                   <p-multiSelect
                     (onChange)="buscaMunicipios2()"
-                    [style]="selectStyles"
+                    [style]="selectStyles2"
                     [options]="deptos"
                     formControlName="selectedDeptos2"
                     optionLabel="dpto"
                   ></p-multiSelect>
                   <p-multiSelect
-                    [style]="selectStyles"
+                    [style]="selectStyles2"
                     [options]="mpios2"
                     formControlName="selectedMpios2"
                     optionLabel="nom_mpio"
                   ></p-multiSelect>
                   <p-multiSelect
-                    [style]="selectStyles"
+                    [style]="selectStyles2"
                     [options]="TipoPST"
                     formControlName="selectedTipos2"
                     optionLabel="tipo"
@@ -107,19 +109,19 @@
                 <form [formGroup]="selectedFilters3">
                   <p-multiSelect
                     (onChange)="buscaMunicipios3()"
-                    [style]="selectStyles"
+                    [style]="selectStyles2"
                     [options]="deptos"
                     formControlName="selectedDeptos3"
                     optionLabel="dpto"
                   ></p-multiSelect>
                   <p-multiSelect
-                    [style]="selectStyles"
+                    [style]="selectStyles2"
                     [options]="mpios3"
                     formControlName="selectedMpios3"
                     optionLabel="nom_mpio"
                   ></p-multiSelect>
                   <p-multiSelect
-                    [style]="selectStyles"
+                    [style]="selectStyles2"
                     [options]="TipoPST"
                     formControlName="selectedTipos3"
                     optionLabel="tipo"
