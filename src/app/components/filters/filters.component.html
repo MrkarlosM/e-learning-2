@@ -1,35 +1,51 @@
 <form [formGroup]="courseForms">
-      
+  <p-multiSelect
+    (onChange)="muestraPST()"
+    [style]="selectStyles"
+    [options]="cursos"
+    formControlName="selectedCursos"
+    optionLabel="fullname"
+    id="selectCursos"
+    placeholder="Seleccione los cursos disponibles"
+    panelStyleClass="custom-panel"
+  ></p-multiSelect>
+  <div class="location">
     <p-multiSelect
-      (onChange)="muestraPST()"
-      [style]="selectStyles"
-      [options]="cursos"
-      formControlName="selectedCursos"
-      optionLabel="fullname"
+      (onChange)="buscaMunicipios()"
+      [style]="selectStyles2"
+      [options]="deptos"
+      formControlName="selectedDeptos"
+      optionLabel="dpto"
+      id="selectDepartamentos"
+      placeholder="Seleccione los departamentos"
+      panelStyleClass="custom-panel2"
     ></p-multiSelect>
     <p-multiSelect
-      [style]="selectStyles"
-      [options]="psts"
-      formControlName="selectedPSTs"
-      optionLabel="name"
+      [style]="selectStyles2"
+      [options]="mpios"
+      formControlName="selectedMpios"
+      optionLabel="nom_mpio"
+      id="selectMunicipios"
+      placeholder="Seleccione los municipios"
+      panelStyleClass="custom-panel2"
     ></p-multiSelect>
     <p-multiSelect
-    (onChange)="buscaMunicipios1()"
-    [style]="selectStyles2"
-    [options]="deptos"
-    formControlName="selectedDeptos1"
-    optionLabel="dpto"
-  ></p-multiSelect>
+      [style]="selectStyles2"
+      [options]="TipoPST"
+      formControlName="selectedTipos"
+      optionLabel="tipo"
+      id="selectUbucacion"
+      placeholder="Seleccione el tipo de ubicación"
+      panelStyleClass="custom-panel2"
+    ></p-multiSelect>
+  </div>
   <p-multiSelect
-    [style]="selectStyles2"
-    [options]="mpios1"
-    formControlName="selectedMpios1"
-    optionLabel="nom_mpio"
+    [style]="selectStyles"
+    [options]="psts"
+    formControlName="selectedPSTs"
+    optionLabel="name"
+    id="selectPST"
+    placeholder="Seleccione los PSTs de los cursos"
+    panelStyleClass="custom-panel"
   ></p-multiSelect>
-  <p-multiSelect
-    [style]="selectStyles2"
-    [options]="TipoPST"
-    formControlName="selectedTipos1"
-    optionLabel="tipo"
-  ></p-multiSelect>
-  </form>
+</form>
