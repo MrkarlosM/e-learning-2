@@ -23,6 +23,7 @@
     <app-e-learning-panel-mincit></app-e-learning-panel-mincit>
   </div>
   <div class="tab-pane fade" id="test-tab-pane" role="tabpanel" aria-labelledby="test-tab" tabindex="0">
-    <app-filters></app-filters>
+    <app-filters (salida)="asigna($event)"></app-filters>
+    <app-test-out [valor]="value"></app-test-out>
   </div>
 </div>

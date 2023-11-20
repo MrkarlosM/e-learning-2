@@ -9,6 +9,16 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'e-learning';
 
-  items: MenuItem[] = [
-]
+  items: MenuItem[] = []
+
+  value: any[] = [];
+  asigna(entrada: any[]){
+    console.log("TENEMOS PSTS y son: ", entrada)
+    this.value = entrada;
+    let show: any[] = [];
+    entrada.forEach(element => {
+      show.push(element.name.split("-")[0])      
+    });
+    this.value=show;
+  } 
 }

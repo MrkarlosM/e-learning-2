@@ -13,13 +13,15 @@ import { ChartModule } from 'primeng/chart';
 import { ELearningPanelMincitComponent } from './components/e-learning-panel-mincit/e-learning-panel-mincit.component';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FiltersComponent } from './components/filters/filters.component';
+import { TestOutComponent } from './components/test-out/test-out.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ELearningPanelComponent,
     ELearningPanelMincitComponent,
-    FiltersComponent
+    FiltersComponent,
+    TestOutComponent
   ],
   imports: [
     BrowserModule,

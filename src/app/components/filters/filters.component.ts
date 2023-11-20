@@ -1,6 +1,6 @@
 import { MoodleServiceService } from 'src/app/services/moodle-service.service';
 import { DivipolaServiceService } from './../../services/divipola-service.service';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
 
@@ -10,10 +10,10 @@ import { firstValueFrom, lastValueFrom } from 'rxjs';
   styleUrls: ['./filters.component.css']
 })
 export class FiltersComponent {
-
+  @Output () salida: EventEmitter<Event[]> = new EventEmitter();
   //Variables
   courseForms: FormGroup;
-  psts: any[] = [];
+  psts: any[]  = [];
   cursos: any;
   mpios: any[] = [];
   deptos: any;
@@ -99,6 +99,7 @@ Devolvemos la lista de PSTs (Grupos)*/
       }
     }))
     this.psts = arrPst
+    this.emite()
   }
 
   //Busca Municipios con relación a los Departamentos Seleccionados
@@ -113,6 +114,11 @@ Devolvemos la lista de PSTs (Grupos)*/
       })
     });
     this.mpios = arrMpios
-    console.log("Los municipios son", this.mpios)
+    this.emite()
   }
+
+  emite(){
+    this.salida.emit(this.psts);
+  }
+
 }
